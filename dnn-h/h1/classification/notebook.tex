@@ -1,0 +1,894 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{classmnist}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{A very simple MNIST
+classifier.}\label{a-very-simple-mnist-classifier.}
+
+\begin{itemize}
+\tightlist
+\item
+  From the documentation at
+  http://tensorflow.org/tutorials/mnist/beginners/index.md
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{from} \PY{n+nn}{\PYZus{}\PYZus{}future\PYZus{}\PYZus{}} \PY{k}{import} \PY{n}{absolute\PYZus{}import}
+        \PY{k+kn}{from} \PY{n+nn}{\PYZus{}\PYZus{}future\PYZus{}\PYZus{}} \PY{k}{import} \PY{n}{division}
+        \PY{k+kn}{from} \PY{n+nn}{\PYZus{}\PYZus{}future\PYZus{}\PYZus{}} \PY{k}{import} \PY{n}{print\PYZus{}function}
+        
+        \PY{k+kn}{import} \PY{n+nn}{argparse}
+        \PY{k+kn}{import} \PY{n+nn}{sys}
+        
+        \PY{k+kn}{from} \PY{n+nn}{tensorflow}\PY{n+nn}{.}\PY{n+nn}{examples}\PY{n+nn}{.}\PY{n+nn}{tutorials}\PY{n+nn}{.}\PY{n+nn}{mnist} \PY{k}{import} \PY{n}{input\PYZus{}data}
+        
+        \PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k}{as} \PY{n+nn}{tf}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}Karma\textbackslash{}Anaconda3\textbackslash{}envs\textbackslash{}tflo\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}h5py\textbackslash{}\_\_init\_\_.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from .\_conv import register\_converters as \_register\_converters
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{def} \PY{n+nf}{main}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} Import data}
+            \PY{n}{mnist} \PY{o}{=} \PY{n}{input\PYZus{}data}\PY{o}{.}\PY{n}{read\PYZus{}data\PYZus{}sets}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{/tmp/data/}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{one\PYZus{}hot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+            
+            \PY{c+c1}{\PYZsh{} Parameters}
+            \PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{l+m+mf}{0.5}
+            \PY{n}{num\PYZus{}iters} \PY{o}{=} \PY{l+m+mi}{1000}
+            \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{100}
+            
+            \PY{c+c1}{\PYZsh{} Create the model}
+            \PY{n}{x} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{placeholder}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{float32}\PY{p}{,} \PY{p}{[}\PY{k+kc}{None}\PY{p}{,} \PY{l+m+mi}{784}\PY{p}{]}\PY{p}{)}
+            \PY{n}{W} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{784}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+            \PY{n}{b} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+            \PY{n}{y} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{W}\PY{p}{)} \PY{o}{+} \PY{n}{b}
+        
+            \PY{c+c1}{\PYZsh{} Define loss and optimizer}
+            \PY{n}{y\PYZus{}} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{placeholder}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{float32}\PY{p}{,} \PY{p}{[}\PY{k+kc}{None}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+        
+            \PY{c+c1}{\PYZsh{} The raw formulation of cross\PYZhy{}entropy,}
+            \PY{c+c1}{\PYZsh{}}
+            \PY{c+c1}{\PYZsh{}   tf.reduce\PYZus{}mean(\PYZhy{}tf.reduce\PYZus{}sum(y\PYZus{} * tf.log(tf.nn.softmax(y)),}
+            \PY{c+c1}{\PYZsh{}                                 reduction\PYZus{}indices=[1]))}
+            \PY{c+c1}{\PYZsh{}}
+            \PY{c+c1}{\PYZsh{} can be numerically unstable.}
+            \PY{c+c1}{\PYZsh{}}
+            \PY{c+c1}{\PYZsh{} So here we use tf.nn.softmax\PYZus{}cross\PYZus{}entropy\PYZus{}with\PYZus{}logits on the raw}
+            \PY{c+c1}{\PYZsh{} outputs of \PYZsq{}y\PYZsq{}, and then average across the batch.}
+            \PY{n}{cross\PYZus{}entropy} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{reduce\PYZus{}mean}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{softmax\PYZus{}cross\PYZus{}entropy\PYZus{}with\PYZus{}logits}\PY{p}{(}\PY{n}{labels}\PY{o}{=}\PY{n}{y\PYZus{}}\PY{p}{,} \PY{n}{logits}\PY{o}{=}\PY{n}{y}\PY{p}{)}\PY{p}{)}
+            \PY{n}{train\PYZus{}step} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{GradientDescentOptimizer}\PY{p}{(}\PY{n}{learning\PYZus{}rate}\PY{p}{)}\PY{o}{.}\PY{n}{minimize}\PY{p}{(}\PY{n}{cross\PYZus{}entropy}\PY{p}{)}
+        
+            \PY{c+c1}{\PYZsh{} Initialize the variables (i.e. assign their default value)}
+            \PY{n}{init} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{global\PYZus{}variables\PYZus{}initializer}\PY{p}{(}\PY{p}{)}
+        
+            \PY{c+c1}{\PYZsh{} Start training}
+            \PY{k}{with} \PY{n}{tf}\PY{o}{.}\PY{n}{Session}\PY{p}{(}\PY{p}{)} \PY{k}{as} \PY{n}{sess}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} Run the initializer}
+                \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{init}\PY{p}{)}  
+        
+                \PY{c+c1}{\PYZsh{} Train}
+                \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{num\PYZus{}iters}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{batch\PYZus{}xs}\PY{p}{,} \PY{n}{batch\PYZus{}ys} \PY{o}{=} \PY{n}{mnist}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{next\PYZus{}batch}\PY{p}{(}\PY{n}{batch\PYZus{}size}\PY{p}{)}
+                    \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{train\PYZus{}step}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{x}\PY{p}{:} \PY{n}{batch\PYZus{}xs}\PY{p}{,} \PY{n}{y\PYZus{}}\PY{p}{:} \PY{n}{batch\PYZus{}ys}\PY{p}{\PYZcb{}}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} Test trained model}
+                \PY{n}{correct\PYZus{}prediction} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{equal}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{tf}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{y\PYZus{}}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+                \PY{n}{accuracy} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{reduce\PYZus{}mean}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{cast}\PY{p}{(}\PY{n}{correct\PYZus{}prediction}\PY{p}{,} \PY{n}{tf}\PY{o}{.}\PY{n}{float32}\PY{p}{)}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{accuracy}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{x}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{images}\PY{p}{,}
+                                                    \PY{n}{y\PYZus{}}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{labels}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n}{main}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Extracting /tmp/data/train-images-idx3-ubyte.gz
+Extracting /tmp/data/train-labels-idx1-ubyte.gz
+Extracting /tmp/data/t10k-images-idx3-ubyte.gz
+Extracting /tmp/data/t10k-labels-idx1-ubyte.gz
+WARNING:tensorflow:From <ipython-input-2-26aafc1a604f>:28: softmax\_cross\_entropy\_with\_logits (from tensorflow.python.ops.nn\_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See tf.nn.softmax\_cross\_entropy\_with\_logits\_v2.
+
+0.9201
+
+    \end{Verbatim}
+
+    \subsubsection{(a) For each of the output classes, identify 10
+misclassified test samples and visualize them in your report. And why do
+you think they got
+misclassified}\label{a-for-each-of-the-output-classes-identify-10-misclassified-test-samples-and-visualize-them-in-your-report.-and-why-do-you-think-they-got-misclassified}
+
+We can see the misclassifications at the end of this section. - For the
+brevity of the report class 0 and 1 is shown in detail, - In case of
+class 0 the first misclassification is 9 and it appears that the shape
+of the zero is not proper and the classifier would have weigted towards
+9 as opposed to 0. - In case of class 1 as well we observed similar
+distortions. If the number 1 was in italics then it was classified
+sometime as 7.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} Import data}
+        \PY{n}{mnist} \PY{o}{=} \PY{n}{input\PYZus{}data}\PY{o}{.}\PY{n}{read\PYZus{}data\PYZus{}sets}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{/tmp/data/}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{one\PYZus{}hot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Parameters}
+        \PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{l+m+mf}{0.001}
+        \PY{n}{num\PYZus{}steps} \PY{o}{=} \PY{l+m+mi}{1000}
+        \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{300}
+        \PY{n}{display\PYZus{}step} \PY{o}{=} \PY{l+m+mi}{100}
+        
+        \PY{c+c1}{\PYZsh{} Network Parameters}
+        \PY{n}{n\PYZus{}hidden\PYZus{}1} \PY{o}{=} \PY{l+m+mi}{256} \PY{c+c1}{\PYZsh{} 1st layer number of neurons}
+        \PY{n}{n\PYZus{}hidden\PYZus{}2} \PY{o}{=} \PY{l+m+mi}{256} 
+        \PY{n}{num\PYZus{}input} \PY{o}{=} \PY{l+m+mi}{784}  \PY{c+c1}{\PYZsh{} MNIST data input (img shape: 28*28)}
+        \PY{n}{num\PYZus{}classes} \PY{o}{=} \PY{l+m+mi}{10} \PY{c+c1}{\PYZsh{} MNIST total classes (0\PYZhy{}9 digits)}
+        
+        \PY{c+c1}{\PYZsh{} tf Graph input}
+        \PY{n}{X} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{placeholder}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{float}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{p}{[}\PY{k+kc}{None}\PY{p}{,} \PY{n}{num\PYZus{}input}\PY{p}{]}\PY{p}{)}
+        \PY{n}{Y} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{placeholder}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{float}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{p}{[}\PY{k+kc}{None}\PY{p}{,} \PY{n}{num\PYZus{}classes}\PY{p}{]}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Store layers weight \PYZam{} bias}
+        \PY{n}{weights} \PY{o}{=} \PY{p}{\PYZob{}}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{h1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{num\PYZus{}input}\PY{p}{,} \PY{n}{n\PYZus{}hidden\PYZus{}1}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{h2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}hidden\PYZus{}1}\PY{p}{,} \PY{n}{n\PYZus{}hidden\PYZus{}2}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}hidden\PYZus{}2}\PY{p}{,} \PY{n}{num\PYZus{}classes}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+        \PY{n}{biases} \PY{o}{=} \PY{p}{\PYZob{}}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}hidden\PYZus{}1}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}hidden\PYZus{}2}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{num\PYZus{}classes}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+        
+        \PY{c+c1}{\PYZsh{} Create model}
+        \PY{k}{def} \PY{n+nf}{neural\PYZus{}net}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} Hidden fully connected layer with 256 neurons}
+            \PY{n}{layer\PYZus{}1} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{weights}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{h1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{biases}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} Hidden fully connected layer with 256 neurons}
+            \PY{n}{layer\PYZus{}2} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{layer\PYZus{}1}\PY{p}{,} \PY{n}{weights}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{h2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{biases}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} Output fully connected layer with a neuron for each class}
+            \PY{n}{out\PYZus{}layer} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{layer\PYZus{}2}\PY{p}{,} \PY{n}{weights}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n}{biases}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{return} \PY{n}{out\PYZus{}layer}
+        
+        \PY{c+c1}{\PYZsh{} Construct model}
+        \PY{n}{logits} \PY{o}{=} \PY{n}{neural\PYZus{}net}\PY{p}{(}\PY{n}{X}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} print(logits)}
+        
+        \PY{c+c1}{\PYZsh{} Define loss and optimizer}
+        \PY{n}{loss\PYZus{}op} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{reduce\PYZus{}mean}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{softmax\PYZus{}cross\PYZus{}entropy\PYZus{}with\PYZus{}logits}\PY{p}{(}\PY{n}{logits}\PY{o}{=}\PY{n}{logits}\PY{p}{,} \PY{n}{labels}\PY{o}{=}\PY{n}{Y}\PY{p}{)}\PY{p}{)}
+        \PY{n}{optimizer} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{AdamOptimizer}\PY{p}{(}\PY{n}{learning\PYZus{}rate}\PY{o}{=}\PY{n}{learning\PYZus{}rate}\PY{p}{)}
+        \PY{n}{train\PYZus{}op} \PY{o}{=} \PY{n}{optimizer}\PY{o}{.}\PY{n}{minimize}\PY{p}{(}\PY{n}{loss\PYZus{}op}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Evaluate model (with test logits, for dropout to be disabled)}
+        \PY{n}{correct\PYZus{}pred} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{equal}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{logits}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{tf}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{Y}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+        \PY{n}{accuracy} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{reduce\PYZus{}mean}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{cast}\PY{p}{(}\PY{n}{correct\PYZus{}pred}\PY{p}{,} \PY{n}{tf}\PY{o}{.}\PY{n}{float32}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Checking odd even and calculating the accuracy}
+        \PY{n}{odd\PYZus{}correct\PYZus{}pred} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{equal}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{logits}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZpc{}}\PY{k}{2}), ((tf.argmax(Y, 1))\PYZpc{}2))
+        \PY{n}{odd\PYZus{}accuracy} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{reduce\PYZus{}mean}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{cast}\PY{p}{(}\PY{n}{odd\PYZus{}correct\PYZus{}pred}\PY{p}{,} \PY{n}{tf}\PY{o}{.}\PY{n}{float32}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}Validation against the actual data}
+        \PY{c+c1}{\PYZsh{}odd\PYZus{}index\PYZus{}op = tf.reduce\PYZus{}mean(tf.nn.softmax\PYZus{}cross\PYZus{}entropy\PYZus{}with\PYZus{}logits(logits=logits, labels=Y))}
+        \PY{n}{out\PYZus{}Yhat\PYZus{}index} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{logits}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{out\PYZus{}Y\PYZus{}index} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{Y}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} y = tf.cond(condition \PYZgt{} 0, lambda: tf.matmul(x, W) + b, lambda: tf.matmul(x, W) \PYZhy{} b)}
+        \PY{c+c1}{\PYZsh{}out\PYZus{}misclass\PYZus{}index = tf.cond(odd\PYZus{}correct\PYZus{}pred == 0, tf.argmax(Y, 1) , \PYZhy{}1)}
+        
+        \PY{c+c1}{\PYZsh{} Initialize the variables (i.e. assign their default value)}
+        \PY{n}{init} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{global\PYZus{}variables\PYZus{}initializer}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Extracting /tmp/data/train-images-idx3-ubyte.gz
+Extracting /tmp/data/train-labels-idx1-ubyte.gz
+Extracting /tmp/data/t10k-images-idx3-ubyte.gz
+Extracting /tmp/data/t10k-labels-idx1-ubyte.gz
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{} Start training}
+        \PY{k}{with} \PY{n}{tf}\PY{o}{.}\PY{n}{Session}\PY{p}{(}\PY{p}{)} \PY{k}{as} \PY{n}{sess}\PY{p}{:}
+        
+            \PY{c+c1}{\PYZsh{} Run the initializer}
+            \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{init}\PY{p}{)}
+        
+            \PY{k}{for} \PY{n}{step} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{num\PYZus{}steps}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                \PY{n}{batch\PYZus{}x}\PY{p}{,} \PY{n}{batch\PYZus{}y} \PY{o}{=} \PY{n}{mnist}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{next\PYZus{}batch}\PY{p}{(}\PY{n}{batch\PYZus{}size}\PY{p}{)}
+               \PY{c+c1}{\PYZsh{} print(batch\PYZus{}x.shape)}
+               \PY{c+c1}{\PYZsh{} print(batch\PYZus{}y.shape)}
+                \PY{c+c1}{\PYZsh{} Run optimization op (backprop)}
+                \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{train\PYZus{}op}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{X}\PY{p}{:} \PY{n}{batch\PYZus{}x}\PY{p}{,} \PY{n}{Y}\PY{p}{:} \PY{n}{batch\PYZus{}y}\PY{p}{\PYZcb{}}\PY{p}{)}
+                \PY{k}{if} \PY{n}{step} \PY{o}{\PYZpc{}} \PY{n}{display\PYZus{}step} \PY{o}{==} \PY{l+m+mi}{0} \PY{o+ow}{or} \PY{n}{step} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+                    \PY{c+c1}{\PYZsh{} Calculate batch loss and accuracy}
+                    \PY{n}{loss}\PY{p}{,} \PY{n}{acc} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{[}\PY{n}{loss\PYZus{}op}\PY{p}{,} \PY{n}{accuracy}\PY{p}{]}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{X}\PY{p}{:} \PY{n}{batch\PYZus{}x}\PY{p}{,}
+                                                                         \PY{n}{Y}\PY{p}{:} \PY{n}{batch\PYZus{}y}\PY{p}{\PYZcb{}}\PY{p}{)}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Step }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{step}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, Minibatch Loss= }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PYZbs{}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:.4f\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{loss}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, Training Accuracy= }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PYZbs{}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{acc}\PY{p}{)}\PY{p}{)}
+        
+                    \PY{n}{odd\PYZus{}loss}\PY{p}{,} \PY{n}{odd\PYZus{}acc} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{[}\PY{n}{loss\PYZus{}op}\PY{p}{,} \PY{n}{odd\PYZus{}accuracy}\PY{p}{]}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{X}\PY{p}{:} \PY{n}{batch\PYZus{}x}\PY{p}{,} \PY{n}{Y}\PY{p}{:} \PY{n}{batch\PYZus{}y}\PY{p}{\PYZcb{}}\PY{p}{)}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Step }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{step}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, odd Minibatch Loss= }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PYZbs{}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:.4f\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{odd\PYZus{}loss}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, odd Training Accuracy= }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PYZbs{}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{odd\PYZus{}acc}\PY{p}{)}\PY{p}{)}
+                    
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Optimization Finished!}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+            \PY{c+c1}{\PYZsh{} Calculate accuracy for MNIST test images}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Testing Accuracy:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PYZbs{}
+                \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{accuracy}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{X}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{images}\PY{p}{,}
+                                              \PY{n}{Y}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{labels}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Odd Testing Accuracy:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PYZbs{}
+                \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{odd\PYZus{}accuracy}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{X}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{images}\PY{p}{,}
+                                              \PY{n}{Y}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{labels}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{)}
+            
+            
+            \PY{n}{out\PYZus{}Yhat}\PY{p}{,} \PY{n}{out\PYZus{}Y} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{[}\PY{n}{out\PYZus{}Yhat\PYZus{}index}\PY{p}{,} \PY{n}{out\PYZus{}Y\PYZus{}index}\PY{p}{]}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{X}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{images}\PY{p}{,} 
+                                                              \PY{n}{Y}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{labels}\PY{p}{\PYZcb{}}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Vals Testing Accuracy:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{out\PYZus{}Yhat}\PY{p}{)}
+            
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Step 1, Minibatch Loss= 2745.7510, Training Accuracy= 0.143
+Step 1, odd Minibatch Loss= 2745.7510, odd Training Accuracy= 0.553
+Step 100, Minibatch Loss= 267.0545, Training Accuracy= 0.723
+Step 100, odd Minibatch Loss= 267.0545, odd Training Accuracy= 0.867
+Step 200, Minibatch Loss= 162.8010, Training Accuracy= 0.827
+Step 200, odd Minibatch Loss= 162.8010, odd Training Accuracy= 0.893
+Step 300, Minibatch Loss= 96.8825, Training Accuracy= 0.843
+Step 300, odd Minibatch Loss= 96.8825, odd Training Accuracy= 0.907
+Step 400, Minibatch Loss= 124.0655, Training Accuracy= 0.873
+Step 400, odd Minibatch Loss= 124.0655, odd Training Accuracy= 0.910
+Step 500, Minibatch Loss= 90.7199, Training Accuracy= 0.873
+Step 500, odd Minibatch Loss= 90.7199, odd Training Accuracy= 0.930
+Step 600, Minibatch Loss= 64.5962, Training Accuracy= 0.877
+Step 600, odd Minibatch Loss= 64.5962, odd Training Accuracy= 0.933
+Step 700, Minibatch Loss= 79.5374, Training Accuracy= 0.870
+Step 700, odd Minibatch Loss= 79.5374, odd Training Accuracy= 0.923
+Step 800, Minibatch Loss= 101.1022, Training Accuracy= 0.833
+Step 800, odd Minibatch Loss= 101.1022, odd Training Accuracy= 0.900
+Step 900, Minibatch Loss= 63.2542, Training Accuracy= 0.877
+Step 900, odd Minibatch Loss= 63.2542, odd Training Accuracy= 0.943
+Step 1000, Minibatch Loss= 61.1486, Training Accuracy= 0.893
+Step 1000, odd Minibatch Loss= 61.1486, odd Training Accuracy= 0.940
+Optimization Finished!
+Testing Accuracy: 0.8812
+Odd Testing Accuracy: 0.9391
+Vals Testing Accuracy: [7 2 1 {\ldots} 4 5 6]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{images}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{labels}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Computed:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{out\PYZus{}Yhat}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Label   :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+        
+        \PY{n}{miscl0} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl1} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl2} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl3} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl4} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl5} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl6} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl7} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl8} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl9} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{5000}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} For label 0}
+            \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{!=} \PY{n}{out\PYZus{}Yhat}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{0} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl0}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{c+c1}{\PYZsh{}print(\PYZsq{}Misclassified: \PYZsq{}, out\PYZus{}Y[i])}
+                    \PY{n}{miscl0}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl1}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl1}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{2} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl2}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl2}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{3} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl3}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl3}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{4} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl4}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl4}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{5} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl5}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl5}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{6} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl6}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl6}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{7} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl7}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl7}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{8} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl8}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl8}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{9} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl9}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl9}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{plotSub5by5}\PY{p}{(}\PY{n}{misclass}\PY{p}{)}\PY{p}{:}
+            \PY{n}{fig}\PY{p}{,} \PY{n}{axs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{28}\PY{p}{,} \PY{l+m+mi}{28}\PY{p}{)}\PY{p}{)}
+            \PY{n}{fig}\PY{o}{.}\PY{n}{subplots\PYZus{}adjust}\PY{p}{(}\PY{n}{hspace} \PY{o}{=} \PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{wspace}\PY{o}{=}\PY{o}{.}\PY{l+m+mi}{001}\PY{p}{)}
+            \PY{n}{axs} \PY{o}{=} \PY{n}{axs}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                \PY{n}{idx} \PY{o}{=} \PY{n}{misclass}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                \PY{n}{axs}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{images}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{28}\PY{p}{,} \PY{l+m+mi}{28}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{title} \PY{o}{=} \PY{n}{i}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{. Actual:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, Identified:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{out\PYZus{}Yhat}\PY{p}{[}\PY{n}{idx}\PY{p}{]}
+                \PY{n}{axs}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{n}{title}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Misclassifications Id:[Class 0] }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{miscl0}\PY{p}{)}
+        \PY{n}{plotSub5by5}\PY{p}{(}\PY{n}{miscl0}\PY{p}{)}
+        
+        \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}  Commented for the sake of the length of the report}
+        \PY{l+s+sd}{print(\PYZsq{}Misclassifications Id:[Class 1] \PYZsq{},miscl1)}
+        \PY{l+s+sd}{plotSub5by5(miscl1)}
+        
+        \PY{l+s+sd}{print(\PYZsq{}Misclassifications Id:[Class 1] \PYZsq{},miscl1)}
+        \PY{l+s+sd}{plotSub5by5(miscl1)}
+        
+        \PY{l+s+sd}{print(\PYZsq{}Misclassifications Id:[Class 1] \PYZsq{},miscl1)}
+        \PY{l+s+sd}{plotSub5by5(miscl1)}
+        
+        \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(10000, 784) (10000, 10)
+Computed: [7 2 1 0 4 1 4 9 6 9]
+Label   : [7 2 1 0 4 1 4 9 5 9]
+Misclassifications Id:[Class 0]  [324, 717, 895, 1191, 1220, 1468, 1570, 1621, 1712, 1762, 1796]
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} "  Commented for the sake of the length of the report\textbackslash{}nprint('Misclassifications Id:[Class 1] ',miscl1)\textbackslash{}nplotSub5by5(miscl1)\textbackslash{}n\textbackslash{}nprint('Misclassifications Id:[Class 1] ',miscl1)\textbackslash{}nplotSub5by5(miscl1)\textbackslash{}n\textbackslash{}nprint('Misclassifications Id:[Class 1] ',miscl1)\textbackslash{}nplotSub5by5(miscl1)\textbackslash{}n\textbackslash{}n"
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{(b) Instead of modifying the model add a new layer at the
+end of the network from tutorial. Explain the code changes required and
+report the
+results.}\label{b-instead-of-modifying-the-model-add-a-new-layer-at-the-end-of-the-network-from-tutorial.-explain-the-code-changes-required-and-report-the-results.}
+
+The code changes are as follows: - In the network added a layer 2 with
+weight h2 and bias b2 (layer\_2 = tf.add(tf.matmul(layer\_1,
+weights{[}'h2'{]}), biases{[}'b2'{]}))
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{\PYZsh{} Import data}
+        \PY{n}{mnist} \PY{o}{=} \PY{n}{input\PYZus{}data}\PY{o}{.}\PY{n}{read\PYZus{}data\PYZus{}sets}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{/tmp/data/}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{one\PYZus{}hot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Parameters}
+        \PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{l+m+mf}{0.001}
+        \PY{n}{num\PYZus{}steps} \PY{o}{=} \PY{l+m+mi}{1000}
+        \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{300}
+        \PY{n}{display\PYZus{}step} \PY{o}{=} \PY{l+m+mi}{100}
+        
+        \PY{c+c1}{\PYZsh{} Network Parameters}
+        \PY{n}{n\PYZus{}hidden\PYZus{}1} \PY{o}{=} \PY{l+m+mi}{256} \PY{c+c1}{\PYZsh{} 1st layer number of neurons}
+        \PY{n}{n\PYZus{}hidden\PYZus{}2} \PY{o}{=} \PY{l+m+mi}{256}
+        \PY{n}{n\PYZus{}hidden\PYZus{}3} \PY{o}{=} \PY{l+m+mi}{256}
+        \PY{n}{num\PYZus{}input} \PY{o}{=} \PY{l+m+mi}{784}  \PY{c+c1}{\PYZsh{} MNIST data input (img shape: 28*28)}
+        \PY{n}{num\PYZus{}classes} \PY{o}{=} \PY{l+m+mi}{10} \PY{c+c1}{\PYZsh{} MNIST total classes (0\PYZhy{}9 digits)}
+        
+        \PY{c+c1}{\PYZsh{} tf Graph input}
+        \PY{n}{X} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{placeholder}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{float}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{p}{[}\PY{k+kc}{None}\PY{p}{,} \PY{n}{num\PYZus{}input}\PY{p}{]}\PY{p}{)}
+        \PY{n}{Y} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{placeholder}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{float}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{p}{[}\PY{k+kc}{None}\PY{p}{,} \PY{n}{num\PYZus{}classes}\PY{p}{]}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Store layers weight \PYZam{} bias}
+        \PY{n}{weights} \PY{o}{=} \PY{p}{\PYZob{}}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{h1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{num\PYZus{}input}\PY{p}{,} \PY{n}{n\PYZus{}hidden\PYZus{}1}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{h2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}hidden\PYZus{}1}\PY{p}{,} \PY{n}{n\PYZus{}hidden\PYZus{}2}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{h3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}hidden\PYZus{}2}\PY{p}{,} \PY{n}{n\PYZus{}hidden\PYZus{}3}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}hidden\PYZus{}3}\PY{p}{,} \PY{n}{num\PYZus{}classes}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+        \PY{n}{biases} \PY{o}{=} \PY{p}{\PYZob{}}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}hidden\PYZus{}1}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}hidden\PYZus{}2}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}hidden\PYZus{}3}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tf}\PY{o}{.}\PY{n}{Variable}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{random\PYZus{}normal}\PY{p}{(}\PY{p}{[}\PY{n}{num\PYZus{}classes}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+        
+        \PY{c+c1}{\PYZsh{} Create model}
+        \PY{k}{def} \PY{n+nf}{neural\PYZus{}net}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} Hidden fully connected layer with 256 neurons}
+            \PY{n}{layer\PYZus{}1} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{weights}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{h1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{biases}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} Hidden fully connected layer with 256 neurons}
+            \PY{n}{layer\PYZus{}2} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{layer\PYZus{}1}\PY{p}{,} \PY{n}{weights}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{h2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{biases}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{}hidden layer 3}
+            \PY{n}{layer\PYZus{}3} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{layer\PYZus{}2}\PY{p}{,} \PY{n}{weights}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{h3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{biases}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} Output fully connected layer with a neuron for each class}
+            \PY{n}{out\PYZus{}layer} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{layer\PYZus{}2}\PY{p}{,} \PY{n}{weights}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n}{biases}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{return} \PY{n}{out\PYZus{}layer}
+        
+        \PY{c+c1}{\PYZsh{} Construct model}
+        \PY{n}{logits} \PY{o}{=} \PY{n}{neural\PYZus{}net}\PY{p}{(}\PY{n}{X}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} print(logits)}
+        
+        \PY{c+c1}{\PYZsh{} Define loss and optimizer}
+        \PY{n}{loss\PYZus{}op} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{reduce\PYZus{}mean}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{softmax\PYZus{}cross\PYZus{}entropy\PYZus{}with\PYZus{}logits}\PY{p}{(}\PY{n}{logits}\PY{o}{=}\PY{n}{logits}\PY{p}{,} \PY{n}{labels}\PY{o}{=}\PY{n}{Y}\PY{p}{)}\PY{p}{)}
+        \PY{n}{optimizer} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{AdamOptimizer}\PY{p}{(}\PY{n}{learning\PYZus{}rate}\PY{o}{=}\PY{n}{learning\PYZus{}rate}\PY{p}{)}
+        \PY{n}{train\PYZus{}op} \PY{o}{=} \PY{n}{optimizer}\PY{o}{.}\PY{n}{minimize}\PY{p}{(}\PY{n}{loss\PYZus{}op}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Evaluate model (with test logits, for dropout to be disabled)}
+        \PY{n}{correct\PYZus{}pred} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{equal}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{logits}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{tf}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{Y}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+        \PY{n}{accuracy} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{reduce\PYZus{}mean}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{cast}\PY{p}{(}\PY{n}{correct\PYZus{}pred}\PY{p}{,} \PY{n}{tf}\PY{o}{.}\PY{n}{float32}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Checking odd even and calculating the accuracy}
+        \PY{n}{odd\PYZus{}correct\PYZus{}pred} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{equal}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{logits}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZpc{}}\PY{k}{2}), ((tf.argmax(Y, 1))\PYZpc{}2))
+        \PY{n}{odd\PYZus{}accuracy} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{reduce\PYZus{}mean}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{cast}\PY{p}{(}\PY{n}{odd\PYZus{}correct\PYZus{}pred}\PY{p}{,} \PY{n}{tf}\PY{o}{.}\PY{n}{float32}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}Validation against the actual data}
+        \PY{c+c1}{\PYZsh{}odd\PYZus{}index\PYZus{}op = tf.reduce\PYZus{}mean(tf.nn.softmax\PYZus{}cross\PYZus{}entropy\PYZus{}with\PYZus{}logits(logits=logits, labels=Y))}
+        \PY{n}{out\PYZus{}Yhat\PYZus{}index} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{logits}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{out\PYZus{}Y\PYZus{}index} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{Y}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} y = tf.cond(condition \PYZgt{} 0, lambda: tf.matmul(x, W) + b, lambda: tf.matmul(x, W) \PYZhy{} b)}
+        \PY{c+c1}{\PYZsh{}out\PYZus{}misclass\PYZus{}index = tf.cond(odd\PYZus{}correct\PYZus{}pred == 0, tf.argmax(Y, 1) , \PYZhy{}1)}
+        
+        \PY{c+c1}{\PYZsh{} Initialize the variables (i.e. assign their default value)}
+        \PY{n}{init} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{global\PYZus{}variables\PYZus{}initializer}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Extracting /tmp/data/train-images-idx3-ubyte.gz
+Extracting /tmp/data/train-labels-idx1-ubyte.gz
+Extracting /tmp/data/t10k-images-idx3-ubyte.gz
+Extracting /tmp/data/t10k-labels-idx1-ubyte.gz
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{} Start training}
+        \PY{k}{with} \PY{n}{tf}\PY{o}{.}\PY{n}{Session}\PY{p}{(}\PY{p}{)} \PY{k}{as} \PY{n}{sess}\PY{p}{:}
+        
+            \PY{c+c1}{\PYZsh{} Run the initializer}
+            \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{init}\PY{p}{)}
+        
+            \PY{k}{for} \PY{n}{step} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{num\PYZus{}steps}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                \PY{n}{batch\PYZus{}x}\PY{p}{,} \PY{n}{batch\PYZus{}y} \PY{o}{=} \PY{n}{mnist}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{next\PYZus{}batch}\PY{p}{(}\PY{n}{batch\PYZus{}size}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} Run optimization op (backprop)}
+                \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{train\PYZus{}op}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{X}\PY{p}{:} \PY{n}{batch\PYZus{}x}\PY{p}{,} \PY{n}{Y}\PY{p}{:} \PY{n}{batch\PYZus{}y}\PY{p}{\PYZcb{}}\PY{p}{)}
+                \PY{k}{if} \PY{n}{step} \PY{o}{\PYZpc{}} \PY{n}{display\PYZus{}step} \PY{o}{==} \PY{l+m+mi}{0} \PY{o+ow}{or} \PY{n}{step} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+                    \PY{c+c1}{\PYZsh{} Calculate batch loss and accuracy}
+                    \PY{n}{loss}\PY{p}{,} \PY{n}{acc} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{[}\PY{n}{loss\PYZus{}op}\PY{p}{,} \PY{n}{accuracy}\PY{p}{]}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{X}\PY{p}{:} \PY{n}{batch\PYZus{}x}\PY{p}{,}
+                                                                         \PY{n}{Y}\PY{p}{:} \PY{n}{batch\PYZus{}y}\PY{p}{\PYZcb{}}\PY{p}{)}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Step }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{step}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, Minibatch Loss= }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PYZbs{}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:.4f\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{loss}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, Training Accuracy= }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PYZbs{}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{acc}\PY{p}{)}\PY{p}{)}
+        
+                    \PY{n}{odd\PYZus{}loss}\PY{p}{,} \PY{n}{odd\PYZus{}acc} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{[}\PY{n}{loss\PYZus{}op}\PY{p}{,} \PY{n}{odd\PYZus{}accuracy}\PY{p}{]}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{X}\PY{p}{:} \PY{n}{batch\PYZus{}x}\PY{p}{,} \PY{n}{Y}\PY{p}{:} \PY{n}{batch\PYZus{}y}\PY{p}{\PYZcb{}}\PY{p}{)}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Step }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{step}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, odd Minibatch Loss= }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PYZbs{}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:.4f\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{odd\PYZus{}loss}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, odd Training Accuracy= }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PYZbs{}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{odd\PYZus{}acc}\PY{p}{)}\PY{p}{)}
+                    
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Optimization Finished!}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+            \PY{c+c1}{\PYZsh{} Calculate accuracy for MNIST test images}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Testing Accuracy:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PYZbs{}
+                \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{accuracy}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{X}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{images}\PY{p}{,}
+                                              \PY{n}{Y}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{labels}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Odd Testing Accuracy:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PYZbs{}
+                \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{odd\PYZus{}accuracy}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{X}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{images}\PY{p}{,}
+                                              \PY{n}{Y}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{labels}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{)}
+            
+            
+            \PY{n}{out\PYZus{}Yhat}\PY{p}{,} \PY{n}{out\PYZus{}Y} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{[}\PY{n}{out\PYZus{}Yhat\PYZus{}index}\PY{p}{,} \PY{n}{out\PYZus{}Y\PYZus{}index}\PY{p}{]}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{X}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{images}\PY{p}{,} 
+                                                              \PY{n}{Y}\PY{p}{:} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{labels}\PY{p}{\PYZcb{}}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Vals Testing Accuracy:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{out\PYZus{}Yhat}\PY{p}{)}
+            
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Step 1, Minibatch Loss= 3468.8357, Training Accuracy= 0.097
+Step 1, odd Minibatch Loss= 3468.8357, odd Training Accuracy= 0.420
+Step 100, Minibatch Loss= 323.2586, Training Accuracy= 0.743
+Step 100, odd Minibatch Loss= 323.2586, odd Training Accuracy= 0.823
+Step 200, Minibatch Loss= 164.9360, Training Accuracy= 0.837
+Step 200, odd Minibatch Loss= 164.9360, odd Training Accuracy= 0.930
+Step 300, Minibatch Loss= 134.4464, Training Accuracy= 0.827
+Step 300, odd Minibatch Loss= 134.4464, odd Training Accuracy= 0.907
+Step 400, Minibatch Loss= 116.5283, Training Accuracy= 0.847
+Step 400, odd Minibatch Loss= 116.5283, odd Training Accuracy= 0.930
+Step 500, Minibatch Loss= 76.2588, Training Accuracy= 0.897
+Step 500, odd Minibatch Loss= 76.2588, odd Training Accuracy= 0.933
+Step 600, Minibatch Loss= 100.7135, Training Accuracy= 0.890
+Step 600, odd Minibatch Loss= 100.7135, odd Training Accuracy= 0.953
+Step 700, Minibatch Loss= 85.2780, Training Accuracy= 0.903
+Step 700, odd Minibatch Loss= 85.2780, odd Training Accuracy= 0.960
+Step 800, Minibatch Loss= 80.5578, Training Accuracy= 0.880
+Step 800, odd Minibatch Loss= 80.5578, odd Training Accuracy= 0.933
+Step 900, Minibatch Loss= 91.2348, Training Accuracy= 0.850
+Step 900, odd Minibatch Loss= 91.2348, odd Training Accuracy= 0.930
+Step 1000, Minibatch Loss= 49.2438, Training Accuracy= 0.877
+Step 1000, odd Minibatch Loss= 49.2438, odd Training Accuracy= 0.913
+Optimization Finished!
+Testing Accuracy: 0.8828
+Odd Testing Accuracy: 0.9388
+Vals Testing Accuracy: [7 2 1 {\ldots} 4 5 6]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{images}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{labels}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Computed:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{out\PYZus{}Yhat}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Label   :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+        
+        \PY{n}{miscl0} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl1} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl2} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl3} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl4} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl5} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl6} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl7} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl8} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{miscl9} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{5000}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} For label 0}
+            \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{!=} \PY{n}{out\PYZus{}Yhat}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{0} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl0}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{c+c1}{\PYZsh{}print(\PYZsq{}Misclassified: \PYZsq{}, out\PYZus{}Y[i])}
+                    \PY{n}{miscl0}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl1}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl1}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{2} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl2}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl2}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{3} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl3}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl3}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{4} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl4}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl4}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{5} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl5}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl5}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{6} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl6}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl6}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{7} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl7}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl7}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{8} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl8}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl8}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{9} \PY{o+ow}{and} \PY{n+nb}{len}\PY{p}{(}\PY{n}{miscl9}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{miscl9}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{plotSub5by5}\PY{p}{(}\PY{n}{misclass}\PY{p}{)}\PY{p}{:}
+            \PY{n}{fig}\PY{p}{,} \PY{n}{axs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{28}\PY{p}{,} \PY{l+m+mi}{28}\PY{p}{)}\PY{p}{)}
+            \PY{n}{fig}\PY{o}{.}\PY{n}{subplots\PYZus{}adjust}\PY{p}{(}\PY{n}{hspace} \PY{o}{=} \PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{wspace}\PY{o}{=}\PY{o}{.}\PY{l+m+mi}{001}\PY{p}{)}
+            \PY{n}{axs} \PY{o}{=} \PY{n}{axs}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                \PY{n}{idx} \PY{o}{=} \PY{n}{misclass}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                \PY{n}{axs}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{mnist}\PY{o}{.}\PY{n}{test}\PY{o}{.}\PY{n}{images}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{28}\PY{p}{,} \PY{l+m+mi}{28}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{title} \PY{o}{=} \PY{n}{i}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{. Actual:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{out\PYZus{}Y}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, Identified:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{out\PYZus{}Yhat}\PY{p}{[}\PY{n}{idx}\PY{p}{]}
+                \PY{n}{axs}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{n}{title}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Misclassifications Id:[Class 0] }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{miscl0}\PY{p}{)}
+        \PY{n}{plotSub5by5}\PY{p}{(}\PY{n}{miscl0}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(10000, 784) (10000, 10)
+Computed: [7 2 1 0 4 1 4 9 6 7]
+Label   : [7 2 1 0 4 1 4 9 5 9]
+Misclassifications Id:[Class 0]  [324, 717, 1191, 1271, 1621, 1748, 1796, 2185, 2370, 2631, 2713]
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{(c) Explain the conceptual difference between the two
+methods i.e., modifying the last layer and adding a new
+layer}\label{c-explain-the-conceptual-difference-between-the-two-methods-i.e.-modifying-the-last-layer-and-adding-a-new-layer}
+
+\begin{itemize}
+\tightlist
+\item
+  By adding a new network layer we increase the dimensionality
+\item
+  XOR problem can be solved by using this approach hence it provides a
+  good separation
+\item
+  Overfitting can be an issue with large number of layers but care
+  should be taken
+\end{itemize}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

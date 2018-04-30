@@ -1,0 +1,570 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{knncifar}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \subsection{K-Nearest Neighbors}\label{k-nearest-neighbors}
+
+\paragraph{Using K-Nearest Neighbor to classify image from the CIFAR-10
+dataset.}\label{using-k-nearest-neighbor-to-classify-image-from-the-cifar-10-dataset.}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{cifar10}
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{math}
+        
+        \PY{n}{cifar10}\PY{o}{.}\PY{n}{maybe\PYZus{}download\PYZus{}and\PYZus{}extract}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{class\PYZus{}names} \PY{o}{=} \PY{n}{cifar10}\PY{o}{.}\PY{n}{load\PYZus{}class\PYZus{}names}\PY{p}{(}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{class\PYZus{}names}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Data has apparently already been downloaded and unpacked.
+Loading data: data/CIFAR-10/cifar-10-batches-py/batches.meta
+['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{images\PYZus{}train}\PY{p}{,} \PY{n}{cls\PYZus{}train}\PY{p}{,} \PY{n}{labels\PYZus{}train} \PY{o}{=} \PY{n}{cifar10}\PY{o}{.}\PY{n}{load\PYZus{}training\PYZus{}data}\PY{p}{(}\PY{p}{)}
+         \PY{n}{images\PYZus{}test}\PY{p}{,} \PY{n}{cls\PYZus{}test}\PY{p}{,} \PY{n}{labels\PYZus{}test} \PY{o}{=} \PY{n}{cifar10}\PY{o}{.}\PY{n}{load\PYZus{}test\PYZus{}data}\PY{p}{(}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Size of:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{} Training\PYZhy{}set:}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{images\PYZus{}train}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{} Test\PYZhy{}set:}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{images\PYZus{}test}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{plot\PYZus{}images}\PY{p}{(}\PY{n}{images}\PY{p}{,} \PY{n}{cls\PYZus{}true}\PY{p}{,} \PY{n}{cls\PYZus{}pred}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{smooth}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{:}
+         
+             \PY{k}{assert} \PY{n+nb}{len}\PY{p}{(}\PY{n}{images}\PY{p}{)} \PY{o}{==} \PY{n+nb}{len}\PY{p}{(}\PY{n}{cls\PYZus{}true}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{9}
+         
+             \PY{c+c1}{\PYZsh{} Create figure with sub\PYZhy{}plots.}
+             \PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}
+         
+             \PY{c+c1}{\PYZsh{} Adjust vertical spacing if we need to print ensemble and best\PYZhy{}net.}
+             \PY{k}{if} \PY{n}{cls\PYZus{}pred} \PY{o+ow}{is} \PY{k+kc}{None}\PY{p}{:}
+                 \PY{n}{hspace} \PY{o}{=} \PY{l+m+mf}{0.3}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{hspace} \PY{o}{=} \PY{l+m+mf}{0.6}
+             \PY{n}{fig}\PY{o}{.}\PY{n}{subplots\PYZus{}adjust}\PY{p}{(}\PY{n}{hspace}\PY{o}{=}\PY{n}{hspace}\PY{p}{,} \PY{n}{wspace}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{)}
+         
+             \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{ax} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{axes}\PY{o}{.}\PY{n}{flat}\PY{p}{)}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{} Interpolation type.}
+                 \PY{k}{if} \PY{n}{smooth}\PY{p}{:}
+                     \PY{n}{interpolation} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spline16}\PY{l+s+s1}{\PYZsq{}}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{interpolation} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nearest}\PY{l+s+s1}{\PYZsq{}}
+         
+                 \PY{c+c1}{\PYZsh{} Plot image.}
+                 \PY{n}{ax}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{images}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{]}\PY{p}{,}
+                           \PY{n}{interpolation}\PY{o}{=}\PY{n}{interpolation}\PY{p}{)}
+                     
+                 \PY{c+c1}{\PYZsh{} Name of the true class.}
+                 \PY{n}{cls\PYZus{}true\PYZus{}name} \PY{o}{=} \PY{n}{class\PYZus{}names}\PY{p}{[}\PY{n}{cls\PYZus{}true}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}
+         
+                 \PY{c+c1}{\PYZsh{} Show true and predicted classes.}
+                 \PY{k}{if} \PY{n}{cls\PYZus{}pred} \PY{o+ow}{is} \PY{k+kc}{None}\PY{p}{:}
+                     \PY{n}{xlabel} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{True: }\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{cls\PYZus{}true\PYZus{}name}\PY{p}{)}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{} Name of the predicted class.}
+                     \PY{n}{cls\PYZus{}pred\PYZus{}name} \PY{o}{=} \PY{n}{class\PYZus{}names}\PY{p}{[}\PY{n}{cls\PYZus{}pred}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}
+         
+                     \PY{n}{xlabel} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{True: }\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Pred: }\PY{l+s+si}{\PYZob{}1\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{cls\PYZus{}true\PYZus{}name}\PY{p}{,} \PY{n}{cls\PYZus{}pred\PYZus{}name}\PY{p}{)}
+         
+                 \PY{c+c1}{\PYZsh{} Show the classes as the label on the x\PYZhy{}axis.}
+                 \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{n}{xlabel}\PY{p}{)}
+                 
+                 \PY{c+c1}{\PYZsh{} Remove ticks from the plot.}
+                 \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{)}
+                 \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}yticks}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} Ensure the plot is shown correctly with multiple plots}
+             \PY{c+c1}{\PYZsh{} in a single Notebook cell.}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+             
+         \PY{c+c1}{\PYZsh{} Get the first images from the test\PYZhy{}set.}
+         \PY{n}{images} \PY{o}{=} \PY{n}{images\PYZus{}test}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{9}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} Get the true classes for those images.}
+         \PY{n}{cls\PYZus{}true} \PY{o}{=} \PY{n}{cls\PYZus{}test}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{9}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} Plot the images and labels using our helper\PYZhy{}function above.}
+         \PY{n}{plot\PYZus{}images}\PY{p}{(}\PY{n}{images}\PY{o}{=}\PY{n}{images}\PY{p}{,} \PY{n}{cls\PYZus{}true}\PY{o}{=}\PY{n}{cls\PYZus{}true}\PY{p}{,} \PY{n}{smooth}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Loading data: data/CIFAR-10/cifar-10-batches-py/data\_batch\_1
+Loading data: data/CIFAR-10/cifar-10-batches-py/data\_batch\_2
+Loading data: data/CIFAR-10/cifar-10-batches-py/data\_batch\_3
+Loading data: data/CIFAR-10/cifar-10-batches-py/data\_batch\_4
+Loading data: data/CIFAR-10/cifar-10-batches-py/data\_batch\_5
+Loading data: data/CIFAR-10/cifar-10-batches-py/test\_batch
+Size of:
+- Training-set:		50000
+- Test-set:		10000
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_2_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{a) Apply K-Nearest Neighbor algorithm with k = 1 on the
+test
+samples.}\label{a-apply-k-nearest-neighbor-algorithm-with-k-1-on-the-test-samples.}
+
+\begin{itemize}
+\tightlist
+\item
+  Classification error rate, Pe = (Number of Wrongly Classified Test
+  Samples / Total Number of Test Samples)
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{num\PYZus{}test} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{images\PYZus{}test}\PY{p}{)}
+         \PY{n}{num\PYZus{}train} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{images\PYZus{}train}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}dists = np.zeros((num\PYZus{}test, num\PYZus{}train))}
+         
+         \PY{n}{num\PYZus{}test} \PY{o}{=} \PY{l+m+mi}{49}
+         \PY{n}{num\PYZus{}train} \PY{o}{=} \PY{l+m+mi}{199}
+         \PY{n}{train} \PY{o}{=} \PY{n}{images\PYZus{}train}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{n}{num\PYZus{}train}\PY{p}{]}
+         \PY{n}{test} \PY{o}{=} \PY{n}{images\PYZus{}test}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{n}{num\PYZus{}test}\PY{p}{]}
+         \PY{n}{dists} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{num\PYZus{}test}\PY{p}{,} \PY{n}{num\PYZus{}train}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Test: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{images\PYZus{}test}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Trn:  }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{images\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Dist: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{dists}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{num\PYZus{}test}\PY{p}{)}\PY{p}{:}
+             \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{num\PYZus{}train}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{a\PYZus{}sq} \PY{o}{=} \PY{l+m+mi}{0}
+                 \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{:}
+                     \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{)}\PY{p}{:}
+                         \PY{k}{for} \PY{n}{y} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{)}\PY{p}{:}
+                             \PY{n}{a} \PY{o}{=} \PY{p}{(}\PY{n}{test}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{x}\PY{p}{]}\PY{p}{[}\PY{n}{y}\PY{p}{]}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{train}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{[}\PY{n}{x}\PY{p}{]}\PY{p}{[}\PY{n}{y}\PY{p}{]}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{p}{)}
+                             \PY{n}{a\PYZus{}sq} \PY{o}{=} \PY{n}{a\PYZus{}sq} \PY{o}{+} \PY{n}{a}\PY{o}{*}\PY{n}{a}
+                 \PY{n}{dists}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{math}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{a\PYZus{}sq}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Test:  (10000, 32, 32, 3)
+Trn:   (50000, 32, 32, 3)
+Dist:  (49, 199)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{c+c1}{\PYZsh{} images\PYZus{}train, cls\PYZus{}train, labels\PYZus{}train}
+         \PY{n}{k} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{20} \PY{p}{]}
+         \PY{n}{prob\PYZus{}errors} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{err\PYZus{}count} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{n}{new\PYZus{}label} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+         \PY{n}{visited} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+         \PY{n}{n\PYZus{}10\PYZus{}n} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+         \PY{k}{for} \PY{n}{a} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+             \PY{n}{idx\PYZus{}min} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{err\PYZus{}count} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{new\PYZus{}label} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{num\PYZus{}test}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{k}\PY{p}{[}\PY{n}{a}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{max\PYZus{}label\PYZus{}count} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+                     \PY{n}{idx\PYZus{}min} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argsort}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{dists}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{n}{k}\PY{p}{[}\PY{n}{a}\PY{p}{]}\PY{p}{]}
+                     \PY{k}{for} \PY{n}{index} \PY{o+ow}{in} \PY{n}{idx\PYZus{}min}\PY{p}{:}
+                         \PY{n}{label\PYZus{}idx} \PY{o}{=} \PY{n}{cls\PYZus{}train}\PY{p}{[}\PY{n}{index}\PY{p}{]}
+                         \PY{n}{max\PYZus{}label\PYZus{}count}\PY{p}{[}\PY{n}{label\PYZus{}idx}\PY{p}{]} \PY{o}{=} \PY{n}{max\PYZus{}label\PYZus{}count}\PY{p}{[}\PY{n}{label\PYZus{}idx}\PY{p}{]} \PY{o}{+} \PY{l+m+mi}{1}
+                         \PY{n}{new\PYZus{}label} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{max\PYZus{}label\PYZus{}count}\PY{p}{)}
+                     
+                     \PY{c+c1}{\PYZsh{}\PYZsh{} a random image from test data and its 10 nearest neighbours}
+                     \PY{k}{if}\PY{p}{(}\PY{p}{(}\PY{n}{k}\PY{p}{[}\PY{n}{a}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{10}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{visited}\PY{p}{[}\PY{p}{(}\PY{n}{cls\PYZus{}test}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}\PY{p}{:}\PY{c+c1}{\PYZsh{} \PYZam{} (cls\PYZus{}test[i])}
+                         \PY{n}{visited}\PY{p}{[}\PY{p}{(}\PY{n}{cls\PYZus{}test}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+                         \PY{n}{n\PYZus{}10\PYZus{}n}\PY{p}{[}\PY{p}{(}\PY{n}{cls\PYZus{}test}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{idx\PYZus{}min}
+                         \PY{n+nb}{print}\PY{p}{(}\PY{p}{(}\PY{n}{cls\PYZus{}test}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ Class \PYZhy{} idx\PYZus{}min}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{idx\PYZus{}min}\PY{p}{)}
+                 \PY{k}{if}\PY{p}{(}\PY{p}{(}\PY{n}{new\PYZus{}label} \PY{o}{!=} \PY{n}{cls\PYZus{}test}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{new\PYZus{}label} \PY{o}{!=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{err\PYZus{}count} \PY{o}{=} \PY{n}{err\PYZus{}count}\PY{o}{+}\PY{l+m+mi}{1}
+         
+             \PY{n}{prob\PYZus{}error} \PY{o}{=} \PY{n}{err\PYZus{}count}\PY{o}{/}\PY{p}{(}\PY{n}{num\PYZus{}test}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{K : }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{k}\PY{p}{[}\PY{n}{a}\PY{p}{]}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Probability of Error = }\PY{l+s+s2}{\PYZdq{}} \PY{p}{,} \PY{l+m+mi}{100}\PY{o}{*}\PY{n}{prob\PYZus{}error}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{prob\PYZus{}errors}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{prob\PYZus{}error}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+K :  1 Probability of Error =  80.0 \%
+
+K :  2 Probability of Error =  84.0 \%
+
+K :  5 Probability of Error =  86.0 \%
+3  Class - idx\_min [ 82  58  75  39 177  47 130  23 173 196]
+8  Class - idx\_min [139 126 185 193  16  31 192 122 169 154]
+0  Class - idx\_min [137 185 100 144 193  15 192  69 126 189]
+6  Class - idx\_min [197 130  86  58  39  98 187 180 132 157]
+1  Class - idx\_min [ 22  54   3 180  17  10 132 196  57 124]
+9  Class - idx\_min [139  69 154 117 193 165 126 144 170  94]
+5  Class - idx\_min [  3 132 197   0  98 142 157  17  39 180]
+7  Class - idx\_min [132 163  22  77   3 162  10  54  96  57]
+4  Class - idx\_min [ 47  10 196 173 180  37  27 132  50 179]
+2  Class - idx\_min [ 69 117 130 196  75  82 170 121 193  58]
+
+K :  10 Probability of Error =  86.0 \%
+
+K :  20 Probability of Error =  82.0 \%
+
+    \end{Verbatim}
+
+    \subsubsection{b) Repeat last step for k = 2, 5, 10, 20 on
+test}\label{b-repeat-last-step-for-k-2-5-10-20-on-test}
+
+\begin{itemize}
+\tightlist
+\item
+  Classification error rate, Pe = (Number of Wrongly Classified Test
+  Samples / Total Number of Test Samples)
+\item
+  Here we can see that by increasing "K" we need not gain accuracy.
+\item
+  At high value of K, there may be points which can influence the
+  classification even though they are far
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{k}\PY{p}{,} \PY{n}{prob\PYZus{}errors}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}    
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K vs Prob Error}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+No handles with labels found to put in legend.
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{(c) For each of the ten classes, pick a random image from
+test data and report its 10 nearest
+neighbors.}\label{c-for-each-of-the-ten-classes-pick-a-random-image-from-test-data-and-report-its-10-nearest-neighbors.}
+
+\paragraph{Here are the Image indices of the 10 nearest neighbor from
+the test
+data}\label{here-are-the-image-indices-of-the-10-nearest-neighbor-from-the-test-data}
+
+\paragraph{for each of the classes as computed in previous
+step}\label{for-each-of-the-classes-as-computed-in-previous-step}
+
+\begin{itemize}
+\tightlist
+\item
+  3 Class - idx\_min {[} 82 58 75 39 177 47 130 23 173 196{]}
+\item
+  8 Class - idx\_min {[}139 126 185 193 16 31 192 122 169 154{]}
+\item
+  0 Class - idx\_min {[}137 185 100 144 193 15 192 69 126 189{]}
+\item
+  6 Class - idx\_min {[}197 130 86 58 39 98 187 180 132 157{]}
+\item
+  1 Class - idx\_min {[} 22 54 3 180 17 10 132 196 57 124{]}
+\item
+  9 Class - idx\_min {[}139 69 154 117 193 165 126 144 170 94{]}
+\item
+  5 Class - idx\_min {[} 3 132 197 0 98 142 157 17 39 180{]}
+\item
+  7 Class - idx\_min {[}132 163 22 77 3 162 10 54 96 57{]}
+\item
+  4 Class - idx\_min {[} 47 10 196 173 180 37 27 132 50 179{]}
+\item
+  2 Class - idx\_min {[} 69 117 130 196 75 82 170 121 193 58{]}
+\end{itemize}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
