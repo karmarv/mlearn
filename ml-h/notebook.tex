@@ -141,7 +141,7 @@
     \def\gt{>}
     \def\lt{<}
     % Document parameters
-    \title{h3-emkmeans}
+    \title{h4-smoada}
     
     
     
@@ -280,1275 +280,862 @@
     
 
     
-    ECE 283: Homework 3
+    \paragraph{Topics: Classification using SVM and
+Adaboost}\label{topics-classification-using-svm-and-adaboost}
 
-Topics: Unsupervised Learning, part 1 (Gaussian mixtures and EM
-algorithm; K-means and soft K-means)
+\paragraph{Assigned: Wednesday May 9}\label{assigned-wednesday-may-9}
 
-Due: Friday May 11
+\subsection{\#\#\#\# Due: Sunday May 20}\label{due-sunday-may-20}
 
-\begin{itemize}
-\tightlist
-\item
-  Neural networks; Tensorflow
-\item
-  2D synthetic gaussian mixture data for binary classification
-\end{itemize}
+\subsubsection{Report}\label{report}
 
-    \subsubsection{Report}\label{report}
-
-\subparagraph{With reference to the code and plots in the detailed
-report \& code
-below}\label{with-reference-to-the-code-and-plots-in-the-detailed-report-code-below}
+With reference to the code and plots in the detailed report \& code
+below
 
 \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
 
-\subparagraph{Generate the 2D sample
-data}\label{generate-the-2d-sample-data}
+\subparagraph{1. SVM}\label{svm}
 
-Generated data in In{[}61{]} through In{[}65{]}
+Implementation available from In{[}11{]} onwards
 
-\subparagraph{1. KMeans : Observations are mentioned right after the
-plot In{[}7{]} along with the probability values for each K when
-compared to the ground
-truth}\label{kmeans-observations-are-mentioned-right-after-the-plot-in7-along-with-the-probability-values-for-each-k-when-compared-to-the-ground-truth}
+\begin{figure}
+\centering
+\includegraphics{SVM.png}
+\caption{SVM Boundaries}
+\end{figure}
 
-With values of K = 2, 3, 4, 5. For each K.
+\subparagraph{2. ADABOOST}\label{adaboost}
 
-\subparagraph{2. EM : log likelihood plot is described below in section
-In{[}8{]} with
-K=2,3,4,5}\label{em-log-likelihood-plot-is-described-below-in-section-in8-with-k2345}
+Implementation available from In{[}29{]} onwards
 
-\subparagraph{3. Comments on the variation of mean with
-covariance}\label{comments-on-the-variation-of-mean-with-covariance}
+\begin{figure}
+\centering
+\includegraphics{weak_1075.png}
+\caption{Weak Learners}
+\end{figure}
 
-\subparagraph{4. Generated Multidim data section
-In{[}9{]}}\label{generated-multidim-data-section-in9}
+\paragraph{DISCUSSION : Observations Comparison among logistic
+regression,SVM, neural network, Adaboost for the current dataset. Which
+one gives the best results
+:}\label{discussion-observations-comparison-among-logistic-regressionsvm-neural-network-adaboost-for-the-current-dataset.-which-one-gives-the-best-results}
 
-\subparagraph{5. Gaussian Mix with Component 1,2,3 generated in section
-In{[}10{]}}\label{gaussian-mix-with-component-123-generated-in-section-in10}
+Based on the probability of error among all the technique mentioned
+above. The probability of error are as follows for all:
 
-\subparagraph{6. The Kmeans on the data can be seen in section
-In{[}11{]} and In{[}12{]}
-below}\label{the-kmeans-on-the-data-can-be-seen-in-section-in11-and-in12-below}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Logistic Regression : 0.36
+\item
+  Neural Network : 0.15
+\item
+  SVM : 0.1375
+\item
+  Adaboost : 0.1255
+\end{enumerate}
 
-All the values can be seen in the log for each K=2,3,4,5
+\paragraph{OBSERVATIONS}\label{observations}
 
-\subparagraph{7. Geometric insight}\label{geometric-insight}
+According to the probability distribution above. Though Adaboost have
+the minimum probability of error and the logistic regression has the
+maximum probabilty of error. After running the Adaboost algorithm for
+about 12000 times it seems there is lot of overfitting. hence if learned
+parameters are going to be tested on the test data, here are high
+chances that the probability of error is going to be too high, hence
+adaboost is not so good for the current data set we are using.
 
-Yes, The values of means calculated after computing the d-dimensional
-matrix are quite relatable to the "u" vector generated in starting. And
-the relation is as follows. Component 1 = u1 + Z1u2 + Z2u3 + N and the
-d-dimensional mean calculated after is , for all the values that have -1
-in the position when taking the final values of component 1, the
-corresponding values in mean matrix are nearer to -1 or less then 0,
-similary for all the values that summed to 1 in the component 1, the
-corresponding value in mean matrix is greater then 0. Similary for all
-the three components created so far. Hence it can be deduced from the
-values of mean that, the initial vector "u" used in creation of
-genertion of data or each component actually influences the values of
-corresponding means of the final mean matrix.
+\paragraph{Neural Network}\label{neural-network}
 
-\subparagraph{8. EM Algorithm in section
-In{[}13{]}}\label{em-algorithm-in-section-in13}
+Neural network has the best performance and minimum probability of
+error. The weights vectors converges to a constant value faster in case
+of Neural Network. While on the same data set in case of SVM and
+Adaboost it takes total of around 25-30 minutes and individual 15
+minutes for SVM and 10 minutes for ADdaboost, hence we can conclude
+Neural Network are much faster and have lower probability of error as
+compared to logistic regressiion , SVM , ADABoost and Kmeans.
 
-Eigen vectors and the covariance directly relate to the parameters Xm1,
-Xm2, Xm3 of the various gaussian mixture components.
-
-    \section{Code Section}\label{code-section}
+\section{Code Section}\label{code-section}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} \PYZhy{}*\PYZhy{} coding: utf\PYZhy{}8 \PYZhy{}*\PYZhy{}}
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{} \PYZhy{}*\PYZhy{} coding: utf\PYZhy{}8 \PYZhy{}*\PYZhy{}}
         \PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k}{as} \PY{n+nn}{tf}
         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
         \PY{k+kn}{from} \PY{n+nn}{math} \PY{k}{import} \PY{o}{*}
         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
         \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{cm}
         \PY{k+kn}{from} \PY{n+nn}{mpl\PYZus{}toolkits}\PY{n+nn}{.}\PY{n+nn}{mplot3d} \PY{k}{import} \PY{n}{Axes3D}
-        
+        \PY{k+kn}{import} \PY{n+nn}{random}
         \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats} \PY{k}{import} \PY{n}{norm}
         \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{Image}\PY{p}{,} \PY{n}{display}\PY{p}{,} \PY{n}{Math}\PY{p}{,} \PY{n}{Latex}
         
         \PY{c+c1}{\PYZsh{} Params}
-        \PY{n}{n\PYZus{}inpoints} \PY{o}{=} \PY{l+m+mi}{200}
+        \PY{n}{total\PYZus{}samples} \PY{o}{=} \PY{l+m+mi}{400}
+        \PY{c+c1}{\PYZsh{}HyperParameters }
+        \PY{n}{sigma} \PY{o}{=} \PY{l+m+mi}{1} \PY{c+c1}{\PYZsh{} L}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-C:\textbackslash{}Users\textbackslash{}Karma\textbackslash{}Anaconda3\textbackslash{}envs\textbackslash{}tflo\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}h5py\textbackslash{}\_\_init\_\_.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
-  from .\_conv import register\_converters as \_register\_converters
-
-    \end{Verbatim}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{def} \PY{n+nf}{generateClass0}\PY{p}{(}\PY{p}{)}\PY{p}{:} 
-            \PY{n}{theta0} \PY{o}{=} \PY{l+m+mi}{0}
-            \PY{n}{lmb01} \PY{o}{=} \PY{l+m+mi}{2}
-            \PY{n}{lmb02} \PY{o}{=} \PY{l+m+mi}{1}
-            \PY{n}{m0} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}  \PY{l+m+mi}{0}\PY{p}{)}
-            \PY{c+c1}{\PYZsh{} computing u * u.T and later multiplying with lambda}
-            \PY{n}{cov01} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{theta0}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{,}    \PY{n}{cos}\PY{p}{(}\PY{n}{theta0}\PY{p}{)}\PY{o}{*}\PY{n}{sin}\PY{p}{(}\PY{n}{theta0}\PY{p}{)}\PY{p}{]}\PY{p}{,}
-                     \PY{p}{[}\PY{p}{(}\PY{n}{sin}\PY{p}{(}\PY{n}{theta0}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{cos}\PY{p}{(}\PY{n}{theta0}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{sin}\PY{p}{(}\PY{n}{theta0}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}
-            \PY{n}{cov02} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{p}{(}\PY{n}{sin}\PY{p}{(}\PY{n}{theta0}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{,}    \PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{theta0}\PY{p}{)}\PY{o}{*}\PY{n}{sin}\PY{p}{(}\PY{n}{theta0}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{,}
-                     \PY{p}{[}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{theta0}\PY{p}{)}\PY{o}{*}\PY{n}{sin}\PY{p}{(}\PY{n}{theta0}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{theta0}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}
-            \PY{n}{cov0} \PY{o}{=} \PY{n}{lmb01}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{n}{cov01}\PY{p}{)} \PY{o}{+} \PY{n}{lmb02}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{n}{cov02}\PY{p}{)}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{m0}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Cov :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{cov0}\PY{p}{)}
-            \PY{n}{cov0\PYZus{}det} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{det}\PY{p}{(}\PY{n}{cov0}\PY{p}{)}
-            \PY{n}{x0}\PY{p}{,} \PY{n}{y0} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{multivariate\PYZus{}normal}\PY{p}{(}\PY{n}{m0}\PY{p}{,} \PY{n}{cov0}\PY{p}{,} \PY{n+nb}{int}\PY{p}{(}\PY{n}{n\PYZus{}inpoints}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{T}
-            \PY{k}{return} \PY{n}{x0}\PY{p}{,}\PY{n}{y0}
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c+c1}{\PYZsh{}Class 0}
+        \PY{n}{num\PYZus{}samples\PYZus{}0} \PY{o}{=} \PY{n}{total\PYZus{}samples}\PY{o}{/}\PY{l+m+mi}{2}
         
-        \PY{n}{x0}\PY{p}{,} \PY{n}{y0} \PY{o}{=} \PY{n}{generateClass0}\PY{p}{(}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}mean\PYZus{}0 = np.array([0,0]).T \PYZsh{}mean of class 0}
+        \PY{n}{mean\PYZus{}0} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)} \PY{c+c1}{\PYZsh{}mean of class 0}
+        
+        \PY{c+c1}{\PYZsh{}Eigen Values pair}
+        \PY{n}{lambda\PYZus{}01} \PY{o}{=} \PY{l+m+mi}{2}
+        \PY{n}{lambda\PYZus{}02} \PY{o}{=} \PY{l+m+mi}{1}
+        
+        \PY{n}{theta\PYZus{}0} \PY{o}{=} \PY{l+m+mi}{0}
+        
+        \PY{c+c1}{\PYZsh{} For More info check the http://www.visiondummy.com/2014/04/geometric\PYZhy{}interpretation\PYZhy{}covariance\PYZhy{}matrix/}
+        
+        \PY{c+c1}{\PYZsh{}Rotation Matrix}
+        \PY{n}{q\PYZus{}0} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{theta\PYZus{}0}\PY{p}{)}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{theta\PYZus{}0}\PY{p}{)}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{theta\PYZus{}0}\PY{p}{)}\PY{p}{,}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{theta\PYZus{}0}\PY{p}{)}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+        \PY{n}{q\PYZus{}0\PYZus{}inv} \PY{o}{=} \PY{n}{q\PYZus{}0}\PY{o}{.}\PY{n}{T}
+        
+        \PY{c+c1}{\PYZsh{} Scaling factor which is represented in Eigen Values Pair}
+        \PY{n}{s\PYZus{}0} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{n}{lambda\PYZus{}01}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{lambda\PYZus{}02}\PY{p}{]}\PY{p}{]}\PY{p}{)} 
+        
+        \PY{c+c1}{\PYZsh{}Covariance is computed as the following. }
+        
+        \PY{n}{cov\PYZus{}0} \PY{o}{=} \PY{n}{q\PYZus{}0}\PY{o}{*}\PY{n}{s\PYZus{}0}\PY{o}{*}\PY{n}{q\PYZus{}0\PYZus{}inv}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{cov\PYZus{}0}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}Multivariate Distribution. samples\PYZus{}0 is the num\PYZus{}samples\PYZus{}0*2D array where each row represent X[1] and x[2] component}
+        \PY{n}{samples\PYZus{}0} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{multivariate\PYZus{}normal}\PY{p}{(}\PY{n}{mean\PYZus{}0}\PY{p}{,}\PY{n}{cov\PYZus{}0}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{num\PYZus{}samples\PYZus{}0}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Data points scaled to zero mean and unit variance.}
+        \PY{c+c1}{\PYZsh{}scaled\PYZus{}samples\PYZus{}0 = preprocessing.scale(samples\PYZus{}0)}
+        
+        \PY{n}{labels\PYZus{}0} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n+nb}{int}\PY{p}{(}\PY{n}{num\PYZus{}samples\PYZus{}0}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} label for class 0 as \PYZhy{}1}
+        \PY{n}{labels\PYZus{}0}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+        
+        \PY{c+c1}{\PYZsh{} Formation of the whole data set with it\PYZsq{}s corresponding labels}
+        \PY{n}{sample\PYZus{}0\PYZus{}data\PYZus{}set} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{samples\PYZus{}0}\PY{p}{,} \PY{n}{labels\PYZus{}0}\PY{p}{)}\PY{p}{,}\PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}scaled\PYZus{}sample\PYZus{}0\PYZus{}data\PYZus{}set = np.concatenate((scaled\PYZus{}samples\PYZus{}0, labels\PYZus{}0),axis = 1)}
+        
+        \PY{c+c1}{\PYZsh{}Class 1 Gaussian Mixture with two components}
+        
+        \PY{n}{num\PYZus{}samples\PYZus{}1} \PY{o}{=} \PY{n}{total\PYZus{}samples}\PY{o}{/}\PY{l+m+mi}{2}
+        \PY{n}{pi\PYZus{}A} \PY{o}{=} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mf}{3.0}
+        \PY{n}{pi\PYZus{}B} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{/}\PY{l+m+mf}{3.0}
+        \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} Start of Component A}
+        \PY{c+c1}{\PYZsh{}\PYZsh{} Component A}
+        
+        \PY{n}{num\PYZus{}samples\PYZus{}1A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{binomial}\PY{p}{(}\PY{n}{num\PYZus{}samples\PYZus{}1}\PY{p}{,}\PY{n}{pi\PYZus{}A}\PY{p}{)}
+        \PY{n}{num\PYZus{}samples\PYZus{}1B} \PY{o}{=} \PY{n}{num\PYZus{}samples\PYZus{}1} \PY{o}{\PYZhy{}} \PY{n}{num\PYZus{}samples\PYZus{}1A}
+        
+        \PY{n}{mean\PYZus{}1A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{T} \PY{c+c1}{\PYZsh{}mean of class 1 component A}
+        
+        \PY{c+c1}{\PYZsh{}Eigen Values pair}
+        \PY{n}{lambda\PYZus{}1A1} \PY{o}{=} \PY{l+m+mi}{2}
+        \PY{n}{lambda\PYZus{}1A2} \PY{o}{=} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mf}{4.0}
+        
+        \PY{n}{theta\PYZus{}1A} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mf}{4.0}
+        
+        \PY{c+c1}{\PYZsh{} For More info check the http://www.visiondummy.com/2014/04/geometric\PYZhy{}interpretation\PYZhy{}covariance\PYZhy{}matrix/}
+        
+        \PY{c+c1}{\PYZsh{}Rotation Matrix}
+        \PY{n}{q\PYZus{}1A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{theta\PYZus{}1A}\PY{p}{)}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{theta\PYZus{}1A}\PY{p}{)}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{theta\PYZus{}1A}\PY{p}{)}\PY{p}{,}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{theta\PYZus{}1A}\PY{p}{)}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+        \PY{n}{q\PYZus{}1A\PYZus{}inv} \PY{o}{=} \PY{n}{q\PYZus{}1A}\PY{o}{.}\PY{n}{T}
+        
+        \PY{c+c1}{\PYZsh{} Scaling factor which is represented in Eigen Values Pair}
+        \PY{n}{s\PYZus{}1A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{n}{lambda\PYZus{}1A1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{lambda\PYZus{}1A2}\PY{p}{]}\PY{p}{]}\PY{p}{)} 
+        
+        \PY{c+c1}{\PYZsh{}Covariance is computed as the following. }
+        \PY{n}{cov\PYZus{}1A} \PY{o}{=} \PY{n}{q\PYZus{}1A}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{s\PYZus{}1A}\PY{p}{)}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{q\PYZus{}1A\PYZus{}inv}\PY{p}{)}
+        
+        
+        \PY{c+c1}{\PYZsh{}Multivariate Distribution. samples\PYZus{}0 is the num\PYZus{}samples\PYZus{}0*2D array where each row represent X[1] and x[2] component}
+        \PY{n}{samples\PYZus{}1A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{multivariate\PYZus{}normal}\PY{p}{(}\PY{n}{mean\PYZus{}1A}\PY{p}{,}\PY{n}{cov\PYZus{}1A}\PY{p}{,}\PY{n}{num\PYZus{}samples\PYZus{}1A}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Data points scaled to zero mean and unit variance.}
+        \PY{c+c1}{\PYZsh{}scaled\PYZus{}samples\PYZus{}1A = preprocessing.scale(samples\PYZus{}1A)}
+        
+        \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} End of Component A}
+        
+        \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} Start of Component B}
+        \PY{c+c1}{\PYZsh{}\PYZsh{} Component B}
+        
+        \PY{n}{mean\PYZus{}1B} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{T} \PY{c+c1}{\PYZsh{}mean of class 1 component A}
+        
+        \PY{c+c1}{\PYZsh{}Eigen Values pair}
+        \PY{n}{lambda\PYZus{}1B1} \PY{o}{=} \PY{l+m+mi}{3}
+        \PY{n}{lambda\PYZus{}1B2} \PY{o}{=} \PY{l+m+mi}{1}
+        
+        \PY{n}{theta\PYZus{}1B} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mf}{4.0}
+        
+        \PY{c+c1}{\PYZsh{} For More info check the http://www.visiondummy.com/2014/04/geometric\PYZhy{}interpretation\PYZhy{}covariance\PYZhy{}matrix/}
+        
+        \PY{c+c1}{\PYZsh{}Rotation Matrix}
+        \PY{n}{q\PYZus{}1B} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{theta\PYZus{}1B}\PY{p}{)}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{theta\PYZus{}1B}\PY{p}{)}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{theta\PYZus{}1B}\PY{p}{)}\PY{p}{,}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{theta\PYZus{}1B}\PY{p}{)}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+        \PY{n}{q\PYZus{}1B\PYZus{}inv} \PY{o}{=} \PY{n}{q\PYZus{}1B}\PY{o}{.}\PY{n}{T}
+        
+        \PY{c+c1}{\PYZsh{} Scaling factor which is represented in Eigen Values Pair}
+        \PY{n}{s\PYZus{}1B} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{n}{lambda\PYZus{}1B1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{lambda\PYZus{}1B2}\PY{p}{]}\PY{p}{]}\PY{p}{)} 
+        
+        \PY{c+c1}{\PYZsh{}Covariance is computed as the following. }
+        
+        \PY{n}{cov\PYZus{}1B} \PY{o}{=} \PY{n}{q\PYZus{}1B}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{s\PYZus{}1B}\PY{p}{)}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{q\PYZus{}1B\PYZus{}inv}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}Multivariate Distribution. samples\PYZus{}0 is the num\PYZus{}samples\PYZus{}0*2D array where each row represent X[1] and x[2] component}
+        \PY{n}{samples\PYZus{}1B} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{multivariate\PYZus{}normal}\PY{p}{(}\PY{n}{mean\PYZus{}1B}\PY{p}{,}\PY{n}{cov\PYZus{}1B}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{num\PYZus{}samples\PYZus{}1B}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Data points scaled to zero mean and unit variance.}
+        \PY{c+c1}{\PYZsh{}scaled\PYZus{}samples\PYZus{}1B = preprocessing.scale(samples\PYZus{}1B)}
+        
+        \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} End of Component B}
+        \PY{n}{samples\PYZus{}1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{samples\PYZus{}1A}\PY{p}{,}\PY{n}{samples\PYZus{}1B}\PY{p}{)}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}samples\PYZus{}1 = pi\PYZus{}A*samples\PYZus{}1A + pi\PYZus{}B*samples\PYZus{}1B}
+        \PY{c+c1}{\PYZsh{}scaled\PYZus{}samples\PYZus{}1 = pi\PYZus{}A*scaled\PYZus{}samples\PYZus{}1A + pi\PYZus{}B*scaled\PYZus{}samples\PYZus{}1B}
+        
+        \PY{n}{labels\PYZus{}1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{n+nb}{int}\PY{p}{(}\PY{n}{num\PYZus{}samples\PYZus{}1}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} label for class 1 as +1}
+        \PY{c+c1}{\PYZsh{}labels\PYZus{}1[:,0] = 1}
+        
+        \PY{c+c1}{\PYZsh{} Formation of the whole data set with it\PYZsq{}s corresponding labels}
+        \PY{n}{sample\PYZus{}1\PYZus{}data\PYZus{}set} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{samples\PYZus{}1}\PY{p}{,} \PY{n}{labels\PYZus{}1}\PY{p}{)}\PY{p}{,}\PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}scaled\PYZus{}sample\PYZus{}1\PYZus{}data\PYZus{}set = np.concatenate((scaled\PYZus{}samples\PYZus{}1, labels\PYZus{}0),axis = 1)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Mean:  (0, 0)   
-Cov : [[2. 0.]
- [0. 1.]]
+(2, 2)
 
     \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} Mixture A}
-        \PY{k}{def} \PY{n+nf}{generateClass1a}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-            \PY{n}{theta1a} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{4}
-            \PY{n}{lmb1a1} \PY{o}{=} \PY{l+m+mi}{2}
-            \PY{n}{lmb1a2} \PY{o}{=} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{4}
-            \PY{n}{m1a} \PY{o}{=} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
-            \PY{n}{cov1a} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{theta1a}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{,}    \PY{n}{cos}\PY{p}{(}\PY{n}{theta1a}\PY{p}{)}\PY{o}{*}\PY{n}{sin}\PY{p}{(}\PY{n}{theta1a}\PY{p}{)}\PY{p}{]}\PY{p}{,}
-                     \PY{p}{[}\PY{p}{(}\PY{n}{sin}\PY{p}{(}\PY{n}{theta1a}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{cos}\PY{p}{(}\PY{n}{theta1a}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{sin}\PY{p}{(}\PY{n}{theta1a}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}
-            \PY{n}{cov2a} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{p}{(}\PY{n}{sin}\PY{p}{(}\PY{n}{theta1a}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{,}    \PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{theta1a}\PY{p}{)}\PY{o}{*}\PY{n}{sin}\PY{p}{(}\PY{n}{theta1a}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{,}
-                     \PY{p}{[}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{theta1a}\PY{p}{)}\PY{o}{*}\PY{n}{sin}\PY{p}{(}\PY{n}{theta1a}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{theta1a}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}
-            \PY{n}{cov1a} \PY{o}{=} \PY{n}{lmb1a1}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{n}{cov1a}\PY{p}{)} \PY{o}{+} \PY{n}{lmb1a2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{n}{cov2a}\PY{p}{)}
-            \PY{n}{cov1a\PYZus{}det} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{det}\PY{p}{(}\PY{n}{cov1a}\PY{p}{)}
-            \PY{n}{x1a}\PY{p}{,} \PY{n}{y1a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{multivariate\PYZus{}normal}\PY{p}{(}\PY{n}{m1a}\PY{p}{,} \PY{n}{cov1a}\PY{p}{,} \PY{n+nb}{int}\PY{p}{(}\PY{n}{n\PYZus{}inpoints}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{T}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{m1a}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Cov :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{cov1a}\PY{p}{)}
-            \PY{k}{return} \PY{n}{x1a}\PY{p}{,}\PY{n}{y1a}
-        
-        \PY{c+c1}{\PYZsh{} Mixture B}
-        \PY{k}{def} \PY{n+nf}{generateClass1b}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-            \PY{n}{theta1b} \PY{o}{=} \PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{4}
-            \PY{n}{lmb1b1} \PY{o}{=} \PY{l+m+mi}{3}
-            \PY{n}{lmb1b2} \PY{o}{=} \PY{l+m+mi}{1}
-            \PY{n}{m1b} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
-            \PY{n}{cov1b} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{theta1b}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{,}    \PY{n}{cos}\PY{p}{(}\PY{n}{theta1b}\PY{p}{)}\PY{o}{*}\PY{n}{sin}\PY{p}{(}\PY{n}{theta1b}\PY{p}{)}\PY{p}{]}\PY{p}{,}
-                     \PY{p}{[}\PY{p}{(}\PY{n}{sin}\PY{p}{(}\PY{n}{theta1b}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{cos}\PY{p}{(}\PY{n}{theta1b}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{sin}\PY{p}{(}\PY{n}{theta1b}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}
-            \PY{n}{cov2b} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{p}{(}\PY{n}{sin}\PY{p}{(}\PY{n}{theta1b}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{,}    \PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{theta1b}\PY{p}{)}\PY{o}{*}\PY{n}{sin}\PY{p}{(}\PY{n}{theta1b}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{,}
-                     \PY{p}{[}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{theta1b}\PY{p}{)}\PY{o}{*}\PY{n}{sin}\PY{p}{(}\PY{n}{theta1b}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{theta1b}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}
-            \PY{n}{cov1b} \PY{o}{=} \PY{n}{lmb1b1}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{n}{cov1b}\PY{p}{)} \PY{o}{+} \PY{n}{lmb1b2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{n}{cov2b}\PY{p}{)}
-            \PY{n}{cov1b\PYZus{}det} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{det}\PY{p}{(}\PY{n}{cov1b}\PY{p}{)}
-            \PY{n}{x1b}\PY{p}{,} \PY{n}{y1b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{multivariate\PYZus{}normal}\PY{p}{(}\PY{n}{m1b}\PY{p}{,} \PY{n}{cov1b}\PY{p}{,} \PY{n+nb}{int}\PY{p}{(}\PY{n}{n\PYZus{}inpoints}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{T}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{m1b}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Cov :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{cov1b}\PY{p}{)}
-            \PY{k}{return} \PY{n}{x1b}\PY{p}{,}\PY{n}{y1b}
-        
-        \PY{n}{x1a}\PY{p}{,} \PY{n}{y1a} \PY{o}{=} \PY{n}{generateClass1a}\PY{p}{(}\PY{p}{)}
-        \PY{n}{x1b}\PY{p}{,} \PY{n}{y1b} \PY{o}{=} \PY{n}{generateClass1b}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Mean:  (-2, 1)   
-Cov : [[1.125 0.875]
- [0.875 1.125]]
-Mean:  (3, 2)   
-Cov : [[2. 1.]
- [1. 2.]]
-
-    \end{Verbatim}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{} Mixture Density of 3 component Gaussian}
-        \PY{c+c1}{\PYZsh{} [Class0 * (1/2) + Class1A * (1/6) + Class1B * (1/3)] }
-        \PY{n}{cnt\PYZus{}m1} \PY{o}{=} \PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{ceil}\PY{p}{(}\PY{n}{n\PYZus{}inpoints}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{floor}\PY{p}{(}\PY{n}{n\PYZus{}inpoints}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{ceil}\PY{p}{(}\PY{n}{n\PYZus{}inpoints}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{]} 
-        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Coefficients count for 3 GMM components: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{cnt\PYZus{}m1}\PY{p}{)}
-        
-        \PY{c+c1}{\PYZsh{} Randomly pick mixture components }
-        \PY{n}{idx\PYZus{}m1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argsort}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{n}{n\PYZus{}inpoints}\PY{p}{)}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{n}{cnt\PYZus{}m1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}
-        \PY{n}{idx\PYZus{}m2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argsort}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{n}{n\PYZus{}inpoints}\PY{p}{)}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{n}{cnt\PYZus{}m1}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}
-        \PY{n}{idx\PYZus{}m3} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argsort}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{n}{n\PYZus{}inpoints}\PY{p}{)}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{n}{cnt\PYZus{}m1}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}
-        
-        \PY{c+c1}{\PYZsh{} Combine the arrays }
-        
-        \PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{y0}\PY{p}{[}\PY{n}{idx\PYZus{}m1}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{y1a}\PY{p}{[}\PY{n}{idx\PYZus{}m2}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{y1b}\PY{p}{[}\PY{n}{idx\PYZus{}m3}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}
-        \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{x0}\PY{p}{[}\PY{n}{idx\PYZus{}m1}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{x1a}\PY{p}{[}\PY{n}{idx\PYZus{}m2}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{x1b}\PY{p}{[}\PY{n}{idx\PYZus{}m3}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}
-        \PY{n}{z} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{n+nb}{int}\PY{p}{(}\PY{n}{cnt\PYZus{}m1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{n+nb}{int}\PY{p}{(}\PY{n}{cnt\PYZus{}m1}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{+} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n+nb}{int}\PY{p}{(}\PY{n}{cnt\PYZus{}m1}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{n\PYZus{}inpoints}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}
-        \PY{n}{z\PYZus{}val} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{n+nb}{int}\PY{p}{(}\PY{n}{cnt\PYZus{}m1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n+nb}{int}\PY{p}{(}\PY{n}{cnt\PYZus{}m1}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{+} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{*}\PY{n+nb}{int}\PY{p}{(}\PY{n}{cnt\PYZus{}m1}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{n\PYZus{}inpoints}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
-        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Component identifiers for GMM mixture: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{z\PYZus{}val}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-        
-        \PY{c+c1}{\PYZsh{} Subplots }
-        \PY{n}{f}\PY{p}{,} \PY{p}{(}\PY{n}{ax1}\PY{p}{,} \PY{n}{ax2}\PY{p}{)} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
-        \PY{n}{ax1}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mix}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gaussian Mixture (k=3)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax1}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
-        \PY{n}{ax2}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x0}\PY{p}{,} \PY{n}{y0}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cl 0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax2}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x1a}\PY{p}{,} \PY{n}{y1a}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZca{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cl 1a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax2}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x1b}\PY{p}{,} \PY{n}{y1b}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cl 1b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mixture 3 Components Separated}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax2}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
-        \PY{n}{f}\PY{o}{.}\PY{n}{subplots\PYZus{}adjust}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Coefficients count for 3 GMM components:  [100, 33, 67]
-Component identifiers for GMM mixture:  (200, 1)
-
-    \end{Verbatim}
-
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_1.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
-        \PY{c+c1}{\PYZsh{} Set up the [Xi, Yi] training data vector}
-        \PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
-        \PY{n}{X} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{vstack}\PY{p}{(}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{T}
-        \PY{n}{Z\PYZus{}val} \PY{o}{=} \PY{n}{z\PYZus{}val}
-        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Training Data, X(x1,x2) Shape:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{X}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, Y Shape}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{z\PYZus{}val}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-        \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
-        \PY{n}{ax} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{111}\PY{p}{,} \PY{n}{projection}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{Z\PYZus{}val}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{n+nb}{int}\PY{p}{(}\PY{n}{z\PYZus{}val}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Visualize the cluster}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}zlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Z}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} plot samples from Class 0 (X\PYZus{}0) and Class 1 (X\PYZus{}1) plt.figure(0)}
+        \PY{c+c1}{\PYZsh{}maxX = 7.5 \PYZsh{} region to plot}
+        \PY{c+c1}{\PYZsh{}maxY = 7.5}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Distribution of the Data}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{sample\PYZus{}0\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{sample\PYZus{}0\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{blue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+        \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{sample\PYZus{}1\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{sample\PYZus{}1\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+        \PY{c+c1}{\PYZsh{}plt.axis([\PYZhy{}maxX, maxX, \PYZhy{}maxY, maxY])}
         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-Training Data, X(x1,x2) Shape: (200, 2) , Y Shape (200, 1)
-
-    \end{Verbatim}
-
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_1.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_3_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
-    \subsection{1. KMEANS}\label{kmeans}
-
-\subparagraph{With values of K = 2, 3, 4, 5. For each K, start with
-several different random
-initializations,}\label{with-values-of-k-2-3-4-5.-for-each-k-start-with-several-different-random-initializations}
-
-\subparagraph{and choose the run that leads to the smallest mean squared
-error.}\label{and-choose-the-run-that-leads-to-the-smallest-mean-squared-error.}
-
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}6}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{cluster} \PY{k}{import} \PY{n}{KMeans}  
-        \PY{n}{kmeans} \PY{o}{=} \PY{n}{KMeans}\PY{p}{(}\PY{n}{n\PYZus{}clusters}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}  
-        \PY{n}{kmeans}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{p}{)}  
-        \PY{n+nb}{print}\PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{cluster\PYZus{}centers\PYZus{}}\PY{p}{)} 
-        \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{kmeans}\PY{o}{.}\PY{n}{labels\PYZus{}}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rainbow}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}  
-        \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{cluster\PYZus{}centers\PYZus{}}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{p}{,}\PY{n}{kmeans}\PY{o}{.}\PY{n}{cluster\PYZus{}centers\PYZus{}}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}  
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{data\PYZus{}set} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{sample\PYZus{}0\PYZus{}data\PYZus{}set}\PY{p}{,}\PY{n}{sample\PYZus{}1\PYZus{}data\PYZus{}set}\PY{p}{)}\PY{p}{)}
+         \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{shuffle}\PY{p}{(}\PY{n}{data\PYZus{}set}\PY{p}{)}
+         \PY{n}{data\PYZus{}set}
 \end{Verbatim}
 
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-[[ 3.45129465  2.30738825]
- [-0.46744735  0.27677531]]
-
-    \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}6}]:} <matplotlib.collections.PathCollection at 0x1bbd3a1a588>
+{\color{outcolor}Out[{\color{outcolor}10}]:} array([[-0.91828172, -0.77850471, -1.        ],
+                [ 0.0321756 , -0.1082165 , -1.        ],
+                [ 0.83151929, -1.1431078 , -1.        ],
+                {\ldots},
+                [-2.1412134 ,  1.21831522,  1.        ],
+                [ 1.64712048, -2.96929057, -1.        ],
+                [-0.36585517,  0.49704773, -1.        ]])
 \end{Verbatim}
             
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_2.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
+    \subsection{1. SVM:}\label{svm}
+
+\subsubsection{Gaussian kernel k(x, x') = exp (− (\textbar{}\textbar{}x
+− x'\textbar{}\textbar{}\^{}2) / 2 *
+(L\^{}2)}\label{gaussian-kernel-kx-x-exp-x-x2-2-l2}
+
+1.1) Plot the decision boundaries, and display the support vectors.
+
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{} KMeans Algorithms Implementation using euclidean distance }
-        \PY{k}{def} \PY{n+nf}{kMeans}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{K}\PY{p}{,} \PY{n}{maxIters} \PY{o}{=} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
-            \PY{c+c1}{\PYZsh{} Centroid m1, m2 ... mk}
-            \PY{n}{centroids} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{K}\PY{p}{)}\PY{p}{,} \PY{p}{:}\PY{p}{]}
-            \PY{c+c1}{\PYZsh{}print(centroids)}
-            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{maxIters}\PY{p}{)}\PY{p}{:}
-                \PY{c+c1}{\PYZsh{} Cluster Assignment step}
-                \PY{n}{C} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmin}\PY{p}{(}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{x\PYZus{}i}\PY{o}{\PYZhy{}}\PY{n}{m\PYZus{}k}\PY{p}{,} \PY{n}{x\PYZus{}i}\PY{o}{\PYZhy{}}\PY{n}{m\PYZus{}k}\PY{p}{)} \PY{k}{for} \PY{n}{m\PYZus{}k} \PY{o+ow}{in} \PY{n}{centroids}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{x\PYZus{}i} \PY{o+ow}{in} \PY{n}{X}\PY{p}{]}\PY{p}{)}
-                \PY{c+c1}{\PYZsh{} Move centroids step}
-                \PY{n}{centroids} \PY{o}{=} \PY{p}{[}\PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{n}{k}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)} \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{K}\PY{p}{)}\PY{p}{]}
-            \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{centroids}\PY{p}{)} \PY{p}{,} \PY{n}{C}
-        
-        
-        \PY{c+c1}{\PYZsh{} Calculate the probability wrt the ground truth}
-        \PY{k}{def} \PY{n+nf}{cprob}\PY{p}{(}\PY{n}{C}\PY{p}{,} \PY{n}{K}\PY{p}{)}\PY{p}{:} 
-            \PY{n}{ground} \PY{o}{=} \PY{p}{(}\PY{n}{Z\PYZus{}val}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K=}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{K}\PY{p}{)}
-            \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{K}\PY{p}{)}\PY{p}{:}
-                \PY{n}{found\PYZus{}ids} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{C}\PY{o}{==}\PY{n}{k}\PY{p}{)}
-                \PY{n}{matched\PYZus{}ground} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{count\PYZus{}nonzero}\PY{p}{(}\PY{n}{C}\PY{p}{[}\PY{n}{found\PYZus{}ids}\PY{p}{]}\PY{o}{==}\PY{n}{ground}\PY{p}{[}\PY{n}{found\PYZus{}ids}\PY{p}{]}\PY{p}{)}
-                \PY{k}{if}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{found\PYZus{}ids}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
-                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{(K=}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{k}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{)Prob:(}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{matched\PYZus{}ground}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{found\PYZus{}ids}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{)=}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{(}\PY{n}{matched\PYZus{}ground}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{found\PYZus{}ids}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-                \PY{k}{else}\PY{p}{:}
-                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{(K=}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{k}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{)Prob:(}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{matched\PYZus{}ground}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{found\PYZus{}ids}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{)=}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
-                
-           
-            
-        \PY{c+c1}{\PYZsh{} Provide a value of k = (1,...K) and plot the centroids}
-        \PY{n}{f}\PY{p}{,} \PY{p}{(}\PY{n}{ax1}\PY{p}{,} \PY{n}{ax2}\PY{p}{,} \PY{n}{ax3}\PY{p}{,} \PY{n}{ax4}\PY{p}{)} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
-        \PY{n}{centroids}\PY{p}{,} \PY{n}{C} \PY{o}{=} \PY{n}{kMeans}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{K} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{)}
-        \PY{n}{ax1}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ob}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
-                     \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{or}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax1}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{centroids}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{centroids}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{markersize}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
-        \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K = 2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{cprob}\PY{p}{(}\PY{n}{C}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
-        
-        \PY{n}{centroids}\PY{p}{,} \PY{n}{C} \PY{o}{=} \PY{n}{kMeans}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{K} \PY{o}{=} \PY{l+m+mi}{3}\PY{p}{)}
-        \PY{n}{ax2}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ob}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
-                     \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{or}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
-                     \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{og}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax2}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{centroids}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{centroids}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{markersize}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
-        \PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K = 3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{cprob}\PY{p}{(}\PY{n}{C}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}
-        
-        \PY{n}{centroids}\PY{p}{,} \PY{n}{C} \PY{o}{=} \PY{n}{kMeans}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{K} \PY{o}{=} \PY{l+m+mi}{4}\PY{p}{)}
-        \PY{n}{ax3}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ob}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
-                     \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{or}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
-                     \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{og}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
-                     \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{oy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax3}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{centroids}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{centroids}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{markersize}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
-        \PY{n}{ax3}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K = 4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{cprob}\PY{p}{(}\PY{n}{C}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}
-        \PY{n}{centroids}\PY{p}{,} \PY{n}{C} \PY{o}{=} \PY{n}{kMeans}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{K} \PY{o}{=} \PY{l+m+mi}{5}\PY{p}{)}
-        \PY{n}{ax4}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ob}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
-                     \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{or}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
-                     \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{og}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
-                     \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{oy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
-                     \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{C} \PY{o}{==} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{om}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{ax4}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{centroids}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{centroids}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{markersize}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
-        \PY{n}{ax4}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K = 5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{cprob}\PY{p}{(}\PY{n}{C}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{gaussian\PYZus{}kernel}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{ndim}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{1} \PY{o+ow}{and} \PY{n}{np}\PY{o}{.}\PY{n}{ndim}\PY{p}{(}\PY{n}{y}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+                 \PY{n}{result} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{y}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{sigma} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+             \PY{k}{elif} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{ndim}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{1} \PY{o+ow}{and} \PY{n}{np}\PY{o}{.}\PY{n}{ndim}\PY{p}{(}\PY{n}{y}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{)} \PY{o+ow}{or} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{ndim}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{1} \PY{o+ow}{and} \PY{n}{np}\PY{o}{.}\PY{n}{ndim}\PY{p}{(}\PY{n}{y}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{result} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{y}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{sigma} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+             \PY{k}{elif} \PY{n}{np}\PY{o}{.}\PY{n}{ndim}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{1} \PY{o+ow}{and} \PY{n}{np}\PY{o}{.}\PY{n}{ndim}\PY{p}{(}\PY{n}{y}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{1}\PY{p}{:}
+                 \PY{n}{result} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{newaxis}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{y}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{newaxis}\PY{p}{,} \PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{sigma} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+             \PY{k}{return} \PY{n}{result}
+         
+         \PY{c+c1}{\PYZsh{}x\PYZus{}len, y\PYZus{}len = 5, 10}
+         \PY{c+c1}{\PYZsh{}gaussian\PYZus{}kernel(np.random.rand(x\PYZus{}len, 1), np.random.rand(y\PYZus{}len, 1)).shape == (5,10)}
+         
+         \PY{c+c1}{\PYZsh{} Objective function to optimize\PYZsh{} Objec }
+         \PY{k}{def} \PY{n+nf}{objective\PYZus{}function}\PY{p}{(}\PY{n}{alphas}\PY{p}{,}\PY{n}{kernel}\PY{p}{,} \PY{n}{data}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Returns the SVM objective function based in the input model defined by:}
+         \PY{l+s+sd}{    `alphas`: vector of Lagrange multipliers}
+         \PY{l+s+sd}{    `target`: vector of class labels (\PYZhy{}1 or 1) for training data}
+         \PY{l+s+sd}{    `kernel`: kernel function}
+         \PY{l+s+sd}{    `X\PYZus{}train`: training data for model.\PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{alphas}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mf}{0.5}\PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{*} \PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{*} \PY{n}{gaussian\PYZus{}kernel}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)} \PY{o}{*} \PY{n}{aplhas} \PY{o}{*} \PY{n}{aplhas}\PY{p}{)}
+         
+         
+         \PY{c+c1}{\PYZsh{} Decision function}
+         \PY{k}{def} \PY{n+nf}{decision\PYZus{}function}\PY{p}{(}\PY{n}{alphas}\PY{p}{,}\PY{n}{data}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{X\PYZus{}Test}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Applies the SVM decision function to the input feature vectors in `x\PYZus{}test`.\PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{c+c1}{\PYZsh{} The following is the loop function.}
+             \PY{n+nb}{sum} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{data}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{sum} \PY{o}{+}\PY{o}{=} \PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{*} \PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{*} \PY{n}{gaussian\PYZus{}kernel}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}\PY{n}{X\PYZus{}Test}\PY{p}{)}
+             \PY{n}{f\PYZus{}x} \PY{o}{=} \PY{n+nb}{sum} \PY{o}{+} \PY{n}{b}
+             \PY{k}{return} \PY{n}{f\PYZus{}x}
+         
+         \PY{k}{def} \PY{n+nf}{compute\PYZus{}range}\PY{p}{(}\PY{n}{alphas}\PY{p}{,}\PY{n}{i}\PY{p}{,}\PY{n}{j}\PY{p}{,}\PY{n}{data}\PY{p}{,}\PY{n}{C}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{!=} \PY{n}{data}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{L} \PY{o}{=} \PY{n+nb}{max}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                 \PY{n}{H} \PY{o}{=} \PY{n+nb}{min}\PY{p}{(}\PY{n}{C}\PY{p}{,}\PY{n}{C}\PY{o}{+}\PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+             \PY{k}{elif} \PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{==} \PY{n}{data}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{:}  
+                 \PY{n}{L} \PY{o}{=} \PY{n+nb}{max}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{+}\PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{C}\PY{p}{)}
+                 \PY{n}{H} \PY{o}{=} \PY{n+nb}{min}\PY{p}{(}\PY{n}{C}\PY{p}{,}\PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{+}\PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+             \PY{k}{return} \PY{n}{L}\PY{p}{,}\PY{n}{H}    
+         
+         \PY{c+c1}{\PYZsh{} Intialization}
+         \PY{n}{alphas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{data\PYZus{}set}\PY{p}{)}\PY{p}{)}
+         \PY{n}{b} \PY{o}{=} \PY{l+m+mf}{0.0}
+         \PY{n}{passes} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{n}{max\PYZus{}passes} \PY{o}{=} \PY{l+m+mi}{300}
+         \PY{n}{C} \PY{o}{=} \PY{l+m+mf}{0.2}
+         \PY{n}{tol} \PY{o}{=} \PY{l+m+mf}{0.001}
+         \PY{n}{m} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{data\PYZus{}set}\PY{p}{)}
+         \PY{n}{data} \PY{o}{=} \PY{n}{data\PYZus{}set}
+         
+         \PY{k}{while}\PY{p}{(}\PY{n}{passes} \PY{o}{\PYZlt{}} \PY{n}{max\PYZus{}passes}\PY{p}{)}\PY{p}{:}
+             
+             \PY{n}{num\PYZus{}changed\PYZus{}alphas} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{m}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{E\PYZus{}i} \PY{o}{=} \PY{n}{decision\PYZus{}function}\PY{p}{(}\PY{n}{alphas}\PY{p}{,}\PY{n}{data}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}
+                 \PY{k}{if}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{*} \PY{n}{E\PYZus{}i}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{*} \PY{n}{tol} \PY{o+ow}{and} \PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n}{C}\PY{p}{)} \PY{o+ow}{or} \PY{p}{(}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{*}\PY{n}{E\PYZus{}i}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{n}{tol} \PY{o+ow}{and} \PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{\PYZgt{}}\PY{l+m+mi}{0} \PY{p}{)}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{j} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{m}\PY{p}{)}
+                     \PY{k}{while}\PY{p}{(}\PY{n}{j}\PY{o}{==}\PY{n}{i}\PY{p}{)}\PY{p}{:}
+                         \PY{n}{j} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{m}\PY{p}{)}
+                     
+                     \PY{n}{E\PYZus{}j} \PY{o}{=} \PY{n}{decision\PYZus{}function}\PY{p}{(}\PY{n}{alphas}\PY{p}{,}\PY{n}{data}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{data}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{data}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}
+         
+                     \PY{n}{alpha\PYZus{}i\PYZus{}old} \PY{o}{=} \PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                     \PY{n}{alpha\PYZus{}j\PYZus{}old} \PY{o}{=} \PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+                     
+                     \PY{n}{L}\PY{p}{,}\PY{n}{H} \PY{o}{=} \PY{n}{compute\PYZus{}range}\PY{p}{(}\PY{n}{alphas}\PY{p}{,}\PY{n}{i}\PY{p}{,}\PY{n}{j}\PY{p}{,}\PY{n}{data}\PY{p}{,}\PY{n}{C}\PY{p}{)}
+                     
+                     \PY{k}{if} \PY{n}{L} \PY{o}{==} \PY{n}{H}\PY{p}{:}
+                         \PY{k}{continue}
+                     \PY{n}{k\PYZus{}ij} \PY{o}{=} \PY{n}{gaussian\PYZus{}kernel}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}\PY{n}{data}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{k\PYZus{}ii} \PY{o}{=} \PY{n}{gaussian\PYZus{}kernel}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}\PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{k\PYZus{}jj} \PY{o}{=} \PY{n}{gaussian\PYZus{}kernel}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}\PY{n}{data}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{eta} \PY{o}{=} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{k\PYZus{}ij} \PY{o}{\PYZhy{}} \PY{n}{k\PYZus{}ii} \PY{o}{\PYZhy{}} \PY{n}{k\PYZus{}jj}
+                     \PY{k}{if} \PY{n}{eta}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{:}
+                         \PY{k}{continue}
+                     
+                     \PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{*} \PY{p}{(}\PY{n}{E\PYZus{}i} \PY{o}{\PYZhy{}} \PY{n}{E\PYZus{}j}\PY{p}{)}\PY{o}{/}\PY{n}{eta}\PY{p}{)}
+                     
+                     \PY{k}{if} \PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{H}\PY{p}{:}
+                         \PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{H}
+                     \PY{k}{elif} \PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n}{L}\PY{p}{:}
+                         \PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{L}
+                         
+                     \PY{k}{if} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{alpha\PYZus{}j\PYZus{}old}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mf}{0.00001}\PY{p}{:}
+                         \PY{k}{continue}
+                      
+                     \PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+} \PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{*} \PY{n}{data}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{*} \PY{p}{(}\PY{n}{alpha\PYZus{}j\PYZus{}old} \PY{o}{\PYZhy{}} \PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                     
+                     \PY{n}{b\PYZus{}1} \PY{o}{=} \PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{E\PYZus{}i} \PY{o}{\PYZhy{}} \PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{*}\PY{p}{(}\PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{alpha\PYZus{}i\PYZus{}old}\PY{p}{)}\PY{o}{*}\PY{n}{k\PYZus{}ii} \PY{o}{\PYZhy{}} \PY{n}{data}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{*}\PY{p}{(}\PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{alpha\PYZus{}j\PYZus{}old}\PY{p}{)}\PY{o}{*}\PY{n}{k\PYZus{}ij}
+                     
+                     \PY{n}{b\PYZus{}2} \PY{o}{=} \PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{E\PYZus{}j} \PY{o}{\PYZhy{}} \PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{*}\PY{p}{(}\PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{alpha\PYZus{}i\PYZus{}old}\PY{p}{)}\PY{o}{*}\PY{n}{k\PYZus{}ij} \PY{o}{\PYZhy{}} \PY{n}{data}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{*}\PY{p}{(}\PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{alpha\PYZus{}j\PYZus{}old}\PY{p}{)}\PY{o}{*}\PY{n}{k\PYZus{}ij}
+                     \PY{k}{if} \PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{\PYZlt{}}\PY{n}{C} \PY{o+ow}{and} \PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}
+                         \PY{n}{b} \PY{o}{=} \PY{n}{b\PYZus{}1}
+                     \PY{k}{elif} \PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{\PYZlt{}}\PY{n}{C} \PY{o+ow}{and} \PY{n}{alphas}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:} 
+                         \PY{n}{b} \PY{o}{=} \PY{n}{b\PYZus{}2}
+                     \PY{k}{else}\PY{p}{:} 
+                         \PY{n}{b} \PY{o}{=} \PY{p}{(}\PY{n}{b\PYZus{}1}\PY{o}{+}\PY{n}{b\PYZus{}2}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{2.0}
+                     \PY{n}{num\PYZus{}changed\PYZus{}alphas} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+         
+             \PY{k}{if} \PY{n}{num\PYZus{}changed\PYZus{}alphas} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{}print (\PYZdq{}Pass \PYZob{}\PYZcb{}\PYZdq{}.format(passes))}
+                 \PY{n}{passes} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{passes} \PY{o}{=} \PY{l+m+mi}{0}
+         
+         
+         \PY{n}{count} \PY{o}{=}\PY{l+m+mi}{0}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{m}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{alphas}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{!=}\PY{l+m+mi}{0} \PY{p}{:}
+                  \PY{n}{count}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Completed}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{ Alphas Count: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{count}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-K= 2
-(K= 1 )Prob:( 90 / 141 )= 0.6382978723404256
-(K= 2 )Prob:( 0 / 59 )= 0.0
-K= 3
-(K= 1 )Prob:( 27 / 61 )= 0.4426229508196721
-(K= 2 )Prob:( 0 / 41 )= 0.0
-(K= 3 )Prob:( 26 / 98 )= 0.2653061224489796
-K= 4
-(K= 1 )Prob:( 0 / 40 )= 0.0
-(K= 2 )Prob:( 13 / 28 )= 0.4642857142857143
-(K= 3 )Prob:( 22 / 92 )= 0.2391304347826087
-(K= 4 )Prob:( 0 / 40 )= 0.0
-K= 5
-(K= 1 )Prob:( 48 / 68 )= 0.7058823529411765
-(K= 2 )Prob:( 24 / 34 )= 0.7058823529411765
-(K= 3 )Prob:( 6 / 30 )= 0.2
-(K= 4 )Prob:( 0 / 40 )= 0.0
-(K= 5 )Prob:( 0 / 28 )= 0.0
+Completed
+ Alphas Count:  230
 
     \end{Verbatim}
 
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_1.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
-    Observations \#\#\#\#\# As we can see from the plot of mean represented
-by the "Star" in magenta color. The mean and covariance are best
-converging when the value of K=3 , on increasing the value of K beyond 3
-, the mean and covarianec then also converges to the same values , and
-as we can see from the plot, the values of 2 means converges to the same
-point, While intializing the values of mean with random variables, we
-found out that even if we take the values of mean too far away and too
-different , for example in case of K=5, the values on m\_hat{[}1,:{]}
-and m\_hat{[}3,:{]}, these are too far away, but once the convergence
-starts , then the values of both converges to the same point. As shown
-in the matrix of of mean values and as you can see from the plot. All
-the values of mean converges to same point if both are coming from the
-same direction towards the cluster. OR i simple terms of both the
-assumed intial values of means are in same direction of the cluster and
-approaching from the same direction.
-
-    \subsection{2. KMEANS - EM Algorithm}\label{kmeans---em-algorithm}
-
-\paragraph{E-STEP}\label{e-step}
-
-We will evaluate the expectation of the below equation for the current
-estimate of the parameter,
-
-\begin{verbatim}
-1. $ log p(x_{i}, z_{i} | \theta) = \sum_{k=1}^{K} z_{i} [k] (log N (x_{i} | m_{k}, C_{k}) + log \pi_{k}) $
-2. $ E[log p(x_{i}, z_{i} | \theta) | \theta^l ] = \sum_{k=1}^{K} p(k|x_{i}) (log N (x_{i} | m_{k}, C_{k}) + log \pi_{k}) $
-Note that $ \theta = \{ pi_{k}, m_{k}, C_{k} \}_{k=1}^{K} $ in the above is to be optimized over to get the next estimate $ \theta^{l+1} $ in the M-step, and $ p(k|x_{i}) $ are numerical values that we computed using the current estimate
-$ \theta^{l} $  in the E-step
-
-#### M-STEP
-We now use these assignment probabilities as weights as to how much each data point counts towards estimating the parameters for a given cluster, and update the parameters for each component k as follows,
-
-1. $ m_{k} = \frac{ \sum_{i=1}^{N} p(k|x_{i})x_{i}}{\sum_{i=1}^{N} p(k|x_{i})} $
-2. $ C_{k} = \frac{ \sum_{i=1}^{N} p(k|x_{i})(x_{i} - m_{k})(x_{i} - m_{k})^{T}}{\sum_{i=1}^{N} p(k|x_{i})} $
-3. $ pi_{k} = \frac{ \sum_{i=1}^{N} p(k|x_{i})}{N} $
+    \begin{verbatim}
+"""Plots the model's decision boundary on the input axes object.
+Range of decision boundary grid is determined by the training data.
+Returns decision boundary grid and axes object (`grid`, `ax`)."""
 \end{verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{fit\PYZus{}EM}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{max\PYZus{}iters} \PY{o}{=} \PY{l+m+mi}{1000}\PY{p}{,} \PY{n}{k}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{eps}\PY{o}{=}\PY{l+m+mf}{0.000001}\PY{p}{)}\PY{p}{:}
-            \PY{c+c1}{\PYZsh{} n = number of data\PYZhy{}points, d = dimension of data points        }
-            \PY{n}{n}\PY{p}{,} \PY{n}{d} \PY{o}{=} \PY{n}{X}\PY{o}{.}\PY{n}{shape}
-            \PY{c+c1}{\PYZsh{} randomly choose the starting centroids/means as 3 of the points from datasets        }
-            \PY{n}{mu} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{k}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)}\PY{p}{,} \PY{p}{:}\PY{p}{]}
-            \PY{c+c1}{\PYZsh{} initialize the covariance matrices for each gaussians}
-            \PY{n}{Sigma}\PY{o}{=} \PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{eye}\PY{p}{(}\PY{n}{d}\PY{p}{)}\PY{p}{]} \PY{o}{*} \PY{n}{k}
-            \PY{c+c1}{\PYZsh{} initialize the probabilities/weights for each gaussians}
-            \PY{n}{w} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{1.}\PY{o}{/}\PY{n}{k}\PY{p}{]} \PY{o}{*} \PY{n}{k}
-            \PY{c+c1}{\PYZsh{} responsibility matrix is initialized to all zeros}
-            \PY{c+c1}{\PYZsh{} we have responsibility for each of n points for eack of k gaussians}
-            \PY{n}{R} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{k}\PY{p}{)}\PY{p}{)}
-            
-            \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} log\PYZus{}likelihoods}
-            \PY{n}{log\PYZus{}likelihoods} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-            \PY{n}{P} \PY{o}{=} \PY{k}{lambda} \PY{n}{mu}\PY{p}{,} \PY{n}{s}\PY{p}{:} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{det}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{o}{*}\PY{o}{*} \PY{o}{\PYZhy{}}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{X}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{/}\PY{l+m+mf}{2.}\PY{p}{)}\PY{p}{)} \PYZbs{}
-                    \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{o}{.}\PY{l+m+mi}{5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{einsum}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ij, ij \PYZhy{}\PYZgt{} i}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{X} \PY{o}{\PYZhy{}} \PY{n}{mu}\PY{p}{,} \PYZbs{}
-                        \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{inv}\PY{p}{(}\PY{n}{s}\PY{p}{)} \PY{p}{,} \PY{p}{(}\PY{n}{X} \PY{o}{\PYZhy{}} \PY{n}{mu}\PY{p}{)}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{o}{.}\PY{n}{T} \PY{p}{)} \PY{p}{)} 
-            
-            \PY{c+c1}{\PYZsh{} Iterate till max\PYZus{}iters iterations        }
-            \PY{k}{while} \PY{n+nb}{len}\PY{p}{(}\PY{n}{log\PYZus{}likelihoods}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{max\PYZus{}iters}\PY{p}{:}
-        
-                \PY{c+c1}{\PYZsh{} E \PYZhy{} Step}
-                \PY{c+c1}{\PYZsh{}\PYZsh{} Vectorized implementation of e\PYZhy{}step equation to calculate the }
-                \PY{c+c1}{\PYZsh{}\PYZsh{} membership for each of k \PYZhy{}gaussians}
-                \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
-                    \PY{n}{R}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{n}{w}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{*} \PY{n}{P}\PY{p}{(}\PY{n}{mu}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{p}{,} \PY{n}{Sigma}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{p}{)}
-                \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} Likelihood computation}
-                \PY{n}{log\PYZus{}likelihood} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{R}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-                \PY{n}{log\PYZus{}likelihoods}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{log\PYZus{}likelihood}\PY{p}{)}
-                \PY{c+c1}{\PYZsh{}\PYZsh{} Normalize so that the responsibility matrix is row stochastic}
-                \PY{n}{R} \PY{o}{=} \PY{p}{(}\PY{n}{R}\PY{o}{.}\PY{n}{T} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{R}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{T}
-                \PY{c+c1}{\PYZsh{}\PYZsh{} The number of datapoints belonging to each gaussian            }
-                \PY{n}{N\PYZus{}ks} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{R}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}
-        
-                \PY{c+c1}{\PYZsh{} M Step}
-                \PY{c+c1}{\PYZsh{}\PYZsh{} calculate the new mean and covariance for each gaussian by }
-                \PY{c+c1}{\PYZsh{}\PYZsh{} utilizing the new responsibilities}
-                \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
-                    \PY{c+c1}{\PYZsh{}\PYZsh{} means}
-                    \PY{n}{mu}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{l+m+mf}{1.} \PY{o}{/} \PY{n}{N\PYZus{}ks}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{R}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{k}\PY{p}{]} \PY{o}{*} \PY{n}{X}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{T}
-                    \PY{n}{x\PYZus{}mu} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{n}{X} \PY{o}{\PYZhy{}} \PY{n}{mu}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{p}{)}
-                    \PY{c+c1}{\PYZsh{}\PYZsh{} covariances}
-                    \PY{n}{Sigma}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{l+m+mi}{1} \PY{o}{/} \PY{n}{N\PYZus{}ks}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{multiply}\PY{p}{(}\PY{n}{x\PYZus{}mu}\PY{o}{.}\PY{n}{T}\PY{p}{,}  \PY{n}{R}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{k}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{x\PYZus{}mu}\PY{p}{)}\PY{p}{)}
-                    \PY{c+c1}{\PYZsh{}\PYZsh{} and finally the probabilities}
-                    \PY{n}{w}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{l+m+mf}{1.} \PY{o}{/} \PY{n}{n} \PY{o}{*} \PY{n}{N\PYZus{}ks}\PY{p}{[}\PY{n}{k}\PY{p}{]}
-                \PY{c+c1}{\PYZsh{} check for onvergence}
-                \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{log\PYZus{}likelihoods}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mi}{2} \PY{p}{:} \PY{k}{continue}
-                \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{log\PYZus{}likelihood} \PY{o}{\PYZhy{}} \PY{n}{log\PYZus{}likelihoods}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{eps}\PY{p}{:} \PY{k}{break}
-            
-            \PY{c+c1}{\PYZsh{}\PYZsh{} bind all results together}
-            \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{namedtuple}
-            \PY{n}{params} \PY{o}{=} \PY{n}{namedtuple}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{params}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sigma}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log\PYZus{}likelihoods}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}iters}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
-            \PY{n}{params}\PY{o}{.}\PY{n}{mu} \PY{o}{=} \PY{n}{mu}
-            \PY{n}{params}\PY{o}{.}\PY{n}{Sigma} \PY{o}{=} \PY{n}{Sigma}
-            \PY{n}{params}\PY{o}{.}\PY{n}{w} \PY{o}{=} \PY{n}{w}
-            \PY{n}{params}\PY{o}{.}\PY{n}{log\PYZus{}likelihoods} \PY{o}{=} \PY{n}{log\PYZus{}likelihoods}
-            \PY{n}{params}\PY{o}{.}\PY{n}{num\PYZus{}iters} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{log\PYZus{}likelihoods}\PY{p}{)}   
-            \PY{k}{return} \PY{n}{params}
-        
-        \PY{k}{for} \PY{n}{k\PYZus{}trial} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{:}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{} K=}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{k\PYZus{}trial}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Parameters estimate \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-            \PY{n}{params} \PY{o}{=} \PY{n}{fit\PYZus{}EM}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{max\PYZus{}iters}\PY{o}{=} \PY{l+m+mi}{100}\PY{p}{,} \PY{n}{k}\PY{o}{=} \PY{n}{k\PYZus{}trial}\PY{p}{)}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LogL :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{params}\PY{o}{.}\PY{n}{log\PYZus{}likelihoods}\PY{p}{)}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mu   :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{params}\PY{o}{.}\PY{n}{mu}\PY{p}{)}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Si   :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{params}\PY{o}{.}\PY{n}{Sigma}\PY{p}{)}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W    :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{params}\PY{o}{.}\PY{n}{w}\PY{p}{)}
-            \PY{n}{lbl} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K=}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{k\PYZus{}trial}
-            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{params}\PY{o}{.}\PY{n}{log\PYZus{}likelihoods}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{n}{lbl}\PY{p}{)}
-        
-        \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log Likelihood vs iteration plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Iterations}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log likelihood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
-        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k}{def} \PY{n+nf}{plot\PYZus{}decision\PYZus{}function}\PY{p}{(}\PY{n}{alphas}\PY{p}{,}\PY{n}{data}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{X\PYZus{}Test}\PY{p}{)}\PY{p}{:}
+             \PY{n}{Y} \PY{o}{=} \PY{n}{gaussian\PYZus{}kernel}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{X\PYZus{}Test}\PY{p}{)}
+             \PY{n}{result} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{alphas} \PY{o}{*} \PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{p}{,} \PY{n}{Y} \PY{p}{)} \PY{o}{+} \PY{n}{b}
+             \PY{k}{return} \PY{n}{result}
+         
+         \PY{k}{def} \PY{n+nf}{plot\PYZus{}decision\PYZus{}boundary}\PY{p}{(}\PY{n}{b}\PY{p}{,}\PY{n}{alphas}\PY{p}{,}\PY{n}{ax}\PY{p}{,} \PY{n}{resolution}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{colors}\PY{o}{=}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{xrange} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{resolution}\PY{p}{)}
+                 \PY{n}{yrange} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{resolution}\PY{p}{)}
+                 \PY{n}{grid} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{n}{plot\PYZus{}decision\PYZus{}function}\PY{p}{(}\PY{n}{alphas}\PY{p}{,} \PY{n}{data\PYZus{}set}\PY{p}{,}\PY{n}{b}\PY{p}{,}
+                                            \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{xr}\PY{p}{,} \PY{n}{yr}\PY{p}{]}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{yr} \PY{o+ow}{in} \PY{n}{yrange}\PY{p}{]} \PY{k}{for} \PY{n}{xr} \PY{o+ow}{in} \PY{n}{xrange}\PY{p}{]}
+                 \PY{n+nb}{print} \PY{p}{(}\PY{n+nb}{type}\PY{p}{(}\PY{n}{grid}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{grid} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{grid}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{xrange}\PY{p}{)}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{yrange}\PY{p}{)}\PY{p}{)}
+                 
+                 \PY{c+c1}{\PYZsh{} Plot decision contours using grid and}
+                 \PY{c+c1}{\PYZsh{} make a scatter plot of training data}
+                 \PY{n}{ax}\PY{o}{.}\PY{n}{contour}\PY{p}{(}\PY{n}{xrange}\PY{p}{,} \PY{n}{yrange}\PY{p}{,} \PY{n}{grid}\PY{p}{,} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+                            \PY{n}{linestyles}\PY{o}{=}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{n}{colors}\PY{o}{=}\PY{n}{colors}\PY{p}{)}
+                 \PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+                            \PY{n}{c}\PY{o}{=}\PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{viridis}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}
+                 
+                 \PY{c+c1}{\PYZsh{} Plot support vectors (non\PYZhy{}zero alphas)}
+                 \PY{c+c1}{\PYZsh{} as circled points (linewidth \PYZgt{} 0)}
+                 \PY{n}{mask} \PY{o}{=} \PY{n}{alphas} \PY{o}{!=} \PY{l+m+mf}{0.0}
+                 \PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{mask}\PY{p}{]}\PY{p}{,} \PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{mask}\PY{p}{]}\PY{p}{,}
+                            \PY{n}{c}\PY{o}{=}\PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{n}{mask}\PY{p}{]}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{viridis}\PY{p}{)}
+                 
+                 \PY{k}{return} \PY{n}{grid}\PY{p}{,} \PY{n}{ax}
+         
+         \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+         \PY{n}{grid}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plot\PYZus{}decision\PYZus{}boundary}\PY{p}{(}\PY{n}{b}\PY{p}{,} \PY{n}{alphas}\PY{p}{,}\PY{n}{ax}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{SVM \PYZhy{} Plot}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{SVM.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-
----------- K= 2 Parameters estimate ----------
-LogL : [-2282.820379107024, -2.7755575615628914e-15, -6.661338147750939e-16]
-Mu   : [[0.1562487  0.52021437]
- [4.35130486 2.79023415]]
-Si   : [array([[3.91614648, 0.63001193],
-       [0.63001193, 1.367434  ]]), array([[1., 0.],
-       [0., 1.]])]
-W    : [0.869980853527839, 0.5]
-
----------- K= 3 Parameters estimate ----------
-LogL : [-1079.6018514760383, -97.52051002898406, -2.220446049250313e-15, 1.1102230246251536e-16]
-Mu   : [[-1.18513646  0.1693727 ]
- [ 0.01817047  0.25748304]
- [ 0.48860611  2.24264206]]
-Si   : [array([[ 2.26748561, -0.21315027],
-       [-0.21315027,  1.02642225]]), array([[ 1.98435422, -0.23899901],
-       [-0.23899901,  1.01622004]]), array([[1., 0.],
-       [0., 1.]])]
-W    : [0.3231822032914043, 0.301598088119588, 0.3333333333333333]
-
----------- K= 4 Parameters estimate ----------
-LogL : [-1196.0684971479864, -176.2557405872803, -2.6645352591003757e-15, -1.1102230246251568e-16]
-Mu   : [[-1.90310472  0.29831427]
- [ 2.69391596  2.72582912]
- [ 0.75765048 -0.0813355 ]
- [-0.80351767  1.11249768]]
-Si   : [array([[1.49226485, 0.0703214 ],
-       [0.0703214 , 0.48118261]]), array([[4.56924998, 1.36972244],
-       [1.36972244, 1.41016494]]), array([[2.21360395, 0.38325949],
-       [0.38325949, 0.78314214]]), array([[1., 0.],
-       [0., 1.]])]
-W    : [0.012611312611104078, 0.2289806409125894, 0.35776911435622133, 0.25]
-
----------- K= 5 Parameters estimate ----------
-LogL : [-927.9242634599116, -233.14107773388335, -3.3632614393820055, -3.4416913763379853e-15, 7.771561172376094e-16]
-Mu   : [[ 5.56051049e-01  1.41964459e-01]
- [-2.73823539e+00  4.49875310e-01]
- [ 8.47331947e-01 -1.85374232e-04]
- [-1.05903526e-01  6.14244328e-01]
- [ 1.80963587e+00  1.29596536e+00]]
-Si   : [array([[1.20873576, 0.25821755],
-       [0.25821755, 0.63352086]]), array([[0.69368499, 0.20121766],
-       [0.20121766, 0.61124106]]), array([[1.45309436, 0.47117128],
-       [0.47117128, 1.10518904]]), array([[1.33381198, 0.22936408],
-       [0.22936408, 1.185686  ]]), array([[1., 0.],
-       [0., 1.]])]
-W    : [0.017405922903813258, 0.07367784046430507, 0.2086066758421174, 0.14996384996351636, 0.2]
+<class 'list'>
 
     \end{Verbatim}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_1.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_1.png}
     \end{center}
     { \hspace*{\fill} \\}
     
-    \subsubsection{3) Comment on how the means and covariances of the
-mixture components you find relate geometrically to the ground truth
-mixture components for different values of
-K.}\label{comment-on-how-the-means-and-covariances-of-the-mixture-components-you-find-relate-geometrically-to-the-ground-truth-mixture-components-for-different-values-of-k.}
-
-    Looking at the values of loglikelihood and the final values of mean and
-covarince matrices. Ground truth : Having been used 3 cluster or the
-data is generated from three clusters. So mathematically the value of
-mean and covariances matrices should have minimun mean square error(MSE)
-when the values of K is equal to 3. but as per my observations the data
-converges much better and nearer to the original mean and covariance
-values when the value of K = 4.
-
-The reason for this might be the type of data generated and the
-closeness in the values of means of the two clusters, Since the accuracy
-is only 60-70\%, hence closeness in mean values and overlapping of data
-of two clusters might be the reason for this. The plot of this are shown
-above in the table, each plot represents the porbability against the
-number of iterations being run on it.
-
-    \subparagraph{Experiments with data in higher
-dimensions}\label{experiments-with-data-in-higher-dimensions}
-
-Let us now see what happens when we increase the number of dimensions to
-d (d to be played with, but the nominal value is d = 30), while keeping
-the \effective dimension" (I'm not defining this formally, but you
-should soon see what I mean once I tell you how to generate the data)
-smaller than d.
-
-\subsubsection{4) Program to generate a random vector u in d dimensions
-as
-follows:}\label{program-to-generate-a-random-vector-u-in-d-dimensions-as-follows}
-
-The components of u are i.i.d., with P{[}u{[}i{]} = 0{]} = 2=3;
-P{[}u{[}i{]} = +1{]} = 1=6; P{[}u{[}i{]} = −1{]} = 1=6
-
-Let \{uj; j = 1 . . . . 7\} be i.i.d.
-
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{d} \PY{o}{=} \PY{l+m+mi}{30}
-        \PY{n}{ul} \PY{o}{=} \PY{l+m+mi}{7}
-        
-        
-        \PY{k}{def} \PY{n+nf}{checkCorrelation}\PY{p}{(}\PY{n}{uj1}\PY{p}{,} \PY{n}{uj2}\PY{p}{)}\PY{p}{:}
-            \PY{n}{udot} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{uj1}\PY{p}{,} \PY{n}{uj2}\PY{p}{)}
-            \PY{k}{return} \PY{n}{udot}
-        
-        \PY{c+c1}{\PYZsh{} Generate the IID }
-        \PY{k}{def} \PY{n+nf}{generateMultiDimGaussian}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-            \PY{n}{uj\PYZus{}cnts} \PY{o}{=} \PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{ceil}\PY{p}{(}\PY{n}{d}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{/}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{floor}\PY{p}{(}\PY{n}{d}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{ceil}\PY{p}{(}\PY{n}{d}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{]}
-            \PY{n}{uj\PYZus{}vals} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{n+nb}{int}\PY{p}{(}\PY{n}{uj\PYZus{}cnts}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n+nb}{int}\PY{p}{(}\PY{n}{uj\PYZus{}cnts}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{+} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n+nb}{int}\PY{p}{(}\PY{n}{uj\PYZus{}cnts}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{)}
-            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of Data points: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{uj\PYZus{}cnts}\PY{p}{)}
-            \PY{n}{u} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{n}{ul}\PY{p}{,}\PY{n}{d}\PY{p}{]}\PY{p}{)}
-            \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{shuffle}\PY{p}{(}\PY{n}{uj\PYZus{}vals}\PY{p}{)}
-            \PY{n}{u}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{uj\PYZus{}vals}
-            \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{ul}\PY{p}{)}\PY{p}{:}
-                \PY{c+c1}{\PYZsh{}print(\PYZsq{}Prev: \PYZsq{}, u[j\PYZhy{}1])}
-                \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{shuffle}\PY{p}{(}\PY{n}{uj\PYZus{}vals}\PY{p}{)}      \PY{c+c1}{\PYZsh{} Shuffled}
-                \PY{n}{u}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{uj\PYZus{}vals}
-                \PY{c+c1}{\PYZsh{}print(\PYZsq{}Curr: \PYZsq{}, u[j])}
-                \PY{n}{corr} \PY{o}{=} \PY{n}{checkCorrelation}\PY{p}{(}\PY{n}{u}\PY{p}{[}\PY{n}{j}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{u}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
-                \PY{c+c1}{\PYZsh{}if too correlated then use another}
-                \PY{k}{if}\PY{p}{(}\PY{n}{corr}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{\PYZgt{}} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
-                    \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{shuffle}\PY{p}{(}\PY{n}{uj\PYZus{}vals}\PY{p}{)}      \PY{c+c1}{\PYZsh{} Shuffled again}
-                \PY{n+nb}{print}\PY{p}{(}\PY{n}{j}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ Corr =\PYZgt{} }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{corr}\PY{p}{)}
-            \PY{k}{return} \PY{n}{u}
-        
-        \PY{c+c1}{\PYZsh{} Uj be i.i.d}
-        \PY{n}{uj} \PY{o}{=} \PY{n}{generateMultiDimGaussian}\PY{p}{(}\PY{p}{)}
-        \PY{n+nb}{print}\PY{p}{(}\PY{n}{uj}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{label\PYZus{}hat} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{correct} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{data\PYZus{}set}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{n}{result} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sign}\PY{p}{(}\PY{n}{plot\PYZus{}decision\PYZus{}function}\PY{p}{(}\PY{n}{alphas}\PY{p}{,} \PY{n}{data\PYZus{}set}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{data\PYZus{}set}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n}{result} \PY{o}{==} \PY{n}{data\PYZus{}set}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{:}
+                 \PY{n}{correct} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+         \PY{n}{error} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{data\PYZus{}set}\PY{p}{)}\PY{o}{\PYZhy{}} \PY{n}{correct}
+         \PY{n+nb}{print} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Misclassification Error is }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{error}\PY{o}{/}\PY{n+nb}{float}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{data\PYZus{}set}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Number of Data points:  [20, 5, 5]
-1  Corr =>  1.0
-2  Corr =>  1.0
-3  Corr =>  -4.0
-4  Corr =>  -1.0
-5  Corr =>  2.0
-6  Corr =>  -2.0
-[[ 0.  0.  1.  0.  1.  0.  0.  0.  0.  0.  1. -1.  0.  0.  0.  0. -1.  1.
-   1. -1. -1.  0.  0.  0. -1.  0.  0.  0.  0.  0.]
- [ 0.  0.  0.  0.  0.  1.  1.  0.  0.  0.  1.  0.  0.  1.  0.  0.  0. -1.
-   0. -1.  0. -1.  0.  0.  0. -1.  0.  1.  0. -1.]
- [ 1.  0.  1.  0.  0.  0.  0.  0.  0.  0.  0. -1.  0.  1. -1.  1.  0. -1.
-   0.  0.  0.  1.  0. -1.  0.  0.  0.  0. -1.  0.]
- [-1. -1.  1.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0. -1.  1.  0.  0.  1.
-   0.  0.  0.  0.  0.  1. -1.  0.  0. -1.  0.  1.]
- [ 0.  0.  0.  0.  0. -1. -1.  0.  0.  0.  1.  0.  1. -1.  0. -1.  0. -1.
-   0.  0.  1.  0.  0.  0.  0.  0.  1.  1.  0.  0.]
- [-1.  0.  1.  1.  0.  1. -1.  0.  0.  0.  0.  0.  1. -1.  0.  0.  0.  0.
-   0.  0.  0.  1.  0.  0.  0. -1.  0.  0. -1.  0.]
- [ 0.  0.  0.  0.  0. -1.  1.  1.  1.  0.  0. -1.  0.  0.  0. -1.  0.  0.
-   1. -1.  1.  0.  0.  0. -1.  0.  0.  0.  0.  0.]]
+Misclassification Error is 0.1375
 
     \end{Verbatim}
 
-    \subsubsection{5) Generate d-dimensional data samples for a Gaussian
-mixture distribution with 3 equiprobable
-components}\label{generate-d-dimensional-data-samples-for-a-gaussian-mixture-distribution-with-3-equiprobable-components}
+    1.2 Obeservation between misclassification done in case of using
+kernelized logistic regression and SVM.
+
+\subsubsection{Prob of Error}\label{prob-of-error}
 
 \begin{itemize}
 \tightlist
 \item
-  Zm : Standard Gaussian (N(0, 1)) distribution
+  Kernelized Logistic Regression : Perror\_c0, Perror\_c1 : 0.16 0.16
 \item
-  N : noise vector" N ∼ N(0, σ2Id) (default value σ2 = 0:01)
+  SVM Misclassification Error : 0.1375
+\end{itemize}
+
+\subparagraph{Sample to compare with the SKlearn
+package}\label{sample-to-compare-with-the-sklearn-package}
+
+\begin{itemize}
+\tightlist
 \item
-  Component 1: Generate X = u1 + Z1u2 + Z2u3 + N.
+  The SKlearn RBF kernel uses K(x, x') = exp(-gamma *
+  \textbar{}\textbar{}x-x'\textbar{}\textbar{}\^{}2)
 \item
-  Component 2: Generate X = 2u4 + sqrt(2)Z1u5 + Z2u6 + N.
-\item
-  Component 3: Generate X = sqrt(2)u6 + Z1(u1 + u2) + (1/sqrt(2))Z2u5 +
-  N
+  Here gamma = 1/(2 * (L\^{}2)) to make it into a gaussian kernel and
+  Gaussian kernel parameter L = 0.1
 \end{itemize}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{num\PYZus{}data} \PY{o}{=} \PY{l+m+mi}{50}
-         \PY{n}{Zm} \PY{o}{=} \PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{num\PYZus{}data}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{num\PYZus{}data}\PY{p}{)}\PY{p}{]}
-         \PY{n}{N\PYZus{}cov} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{eye}\PY{p}{(}\PY{n}{d}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{l+m+mf}{0.01}\PY{p}{)}
-         \PY{n}{N\PYZus{}mu} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{d}\PY{p}{]}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+{\color{incolor}In [{\color{incolor}22}]:} \PY{c+c1}{\PYZsh{} Using SKLearn package for SVM}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k}{import} \PY{n}{svm}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics}\PY{n+nn}{.}\PY{n+nn}{pairwise} \PY{k}{import} \PY{n}{euclidean\PYZus{}distances}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics}\PY{n+nn}{.}\PY{n+nn}{pairwise} \PY{k}{import} \PY{n}{check\PYZus{}pairwise\PYZus{}arrays}
          
-         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Zm:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{Zm}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, N:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{N\PYZus{}cov}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Uj:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{uj}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{c+c1}{\PYZsh{} Function for each component function}
-         \PY{n}{Xm1} \PY{o}{=} \PY{k}{lambda} \PY{n}{z1}\PY{p}{,} \PY{n}{z2}\PY{p}{,} \PY{n}{n}\PY{p}{:} \PY{p}{(}\PY{n}{uj}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{d}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{n}{z1}\PY{o}{*}\PY{n}{uj}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{d}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{n}{z2}\PY{o}{*}\PY{n}{uj}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{d}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{n}{n}\PY{p}{)}
-         \PY{n}{Xm2} \PY{o}{=} \PY{k}{lambda} \PY{n}{z1}\PY{p}{,} \PY{n}{z2}\PY{p}{,} \PY{n}{n}\PY{p}{:} \PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{uj}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{d}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{l+m+mf}{1.414} \PY{o}{*} \PY{n}{z1}\PY{o}{*}\PY{n}{uj}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{d}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{n}{z2}\PY{o}{*}\PY{n}{uj}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{d}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{n}{n}\PY{p}{)}
-         \PY{n}{Xm3} \PY{o}{=} \PY{k}{lambda} \PY{n}{z1}\PY{p}{,} \PY{n}{z2}\PY{p}{,} \PY{n}{n}\PY{p}{:} \PY{p}{(}\PY{l+m+mf}{1.414}\PY{o}{*}\PY{n}{uj}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{d}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{n}{z1}\PY{o}{*}\PY{p}{(}\PY{n}{uj}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{d}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{uj}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{d}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mf}{1.414}\PY{p}{)}\PY{o}{*}\PY{n}{z2}\PY{o}{*}\PY{n}{uj}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{d}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{n}{n}\PY{p}{)}
-         \PY{n}{X} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{n}{num\PYZus{}data}\PY{p}{,} \PY{n}{d}\PY{p}{]}\PY{p}{)}
          
-         \PY{n}{X1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{n}{d}\PY{p}{,}\PY{n}{num\PYZus{}data}\PY{p}{]}\PY{p}{)}
-         \PY{n}{X2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{n}{d}\PY{p}{,}\PY{n}{num\PYZus{}data}\PY{p}{]}\PY{p}{)}
-         \PY{n}{X3} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{n}{d}\PY{p}{,}\PY{n}{num\PYZus{}data}\PY{p}{]}\PY{p}{)}
+         \PY{n}{X\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{samples\PYZus{}0}\PY{p}{,}\PY{n}{samples\PYZus{}1}\PY{p}{)}\PY{p}{)}
+         \PY{n}{y\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{labels\PYZus{}0}\PY{p}{,}\PY{n}{labels\PYZus{}1}\PY{p}{)}\PY{p}{)}
          
-         \PY{c+c1}{\PYZsh{} Assign the values based on the three component function}
-         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{num\PYZus{}data}\PY{p}{)}\PY{p}{:}
-             \PY{n}{N} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{multivariate\PYZus{}normal}\PY{p}{(}\PY{n}{N\PYZus{}mu}\PY{p}{,} \PY{n}{N\PYZus{}cov}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}  
-             \PY{n}{X1}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{Xm1}\PY{p}{(}\PY{n}{Zm}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{Zm}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{N}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{o}{.}\PY{n}{T}
-             \PY{n}{X2}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{Xm2}\PY{p}{(}\PY{n}{Zm}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{Zm}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{N}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{o}{.}\PY{n}{T}
-             \PY{n}{X3}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{Xm3}\PY{p}{(}\PY{n}{Zm}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{Zm}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{N}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+         \PY{c+c1}{\PYZsh{} Gaussian kernel parameter L }
+         \PY{n}{L} \PY{o}{=} \PY{l+m+mf}{0.4}
+         \PY{n}{gamma} \PY{o}{=} \PY{l+m+mi}{1}\PY{o}{/}\PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{p}{(}\PY{n}{L}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+         \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rbf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{n}{gamma}\PY{p}{)}
+         \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
          
-         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X1:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{X1}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X2:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{X2}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X3:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{X3}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} plot the line, the points, and the nearest vectors to the plane}
+         \PY{n}{fignum} \PY{o}{=} \PY{l+m+mi}{1}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{fignum}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{18}\PY{p}{,} \PY{l+m+mi}{14}\PY{p}{)}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{clf}\PY{p}{(}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} Plot the support vectors}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{clf}\PY{o}{.}\PY{n}{support\PYZus{}vectors\PYZus{}}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{clf}\PY{o}{.}\PY{n}{support\PYZus{}vectors\PYZus{}}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{80}\PY{p}{,}
+                     \PY{n}{facecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Support Vectors}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} Plot the training points}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X\PYZus{}train}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{y\PYZus{}train}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{Paired}\PY{p}{,}
+                     \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tight}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{x\PYZus{}min} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{5}
+         \PY{n}{x\PYZus{}max} \PY{o}{=} \PY{l+m+mi}{5}
+         \PY{n}{y\PYZus{}min} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{5}
+         \PY{n}{y\PYZus{}max} \PY{o}{=} \PY{l+m+mi}{5}
+         
+         \PY{n}{XX}\PY{p}{,} \PY{n}{YY} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mgrid}\PY{p}{[}\PY{n}{x\PYZus{}min}\PY{p}{:}\PY{n}{x\PYZus{}max}\PY{p}{:}\PY{l+m+mi}{200}\PY{n}{j}\PY{p}{,} \PY{n}{y\PYZus{}min}\PY{p}{:}\PY{n}{y\PYZus{}max}\PY{p}{:}\PY{l+m+mi}{200}\PY{n}{j}\PY{p}{]}
+         \PY{n}{Z} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{decision\PYZus{}function}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{c\PYZus{}}\PY{p}{[}\PY{n}{XX}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{YY}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Put the result into a color plot}
+         \PY{n}{Z} \PY{o}{=} \PY{n}{Z}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{XX}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{fignum}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{pcolormesh}\PY{p}{(}\PY{n}{XX}\PY{p}{,} \PY{n}{YY}\PY{p}{,} \PY{n}{Z} \PY{o}{\PYZlt{}} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{alpha} \PY{o}{=} \PY{l+m+mf}{0.9}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{Paired}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{contour}\PY{p}{(}\PY{n}{XX}\PY{p}{,} \PY{n}{YY}\PY{p}{,} \PY{n}{Z}\PY{p}{,} \PY{n}{alpha} \PY{o}{=} \PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{linestyles}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                     \PY{n}{levels}\PY{o}{=}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{o}{.}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{jet}\PY{p}{,} \PY{n}{antialiased}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{yticks}\PY{p}{(}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Decision boundaries, and the support vectors}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X Train Size}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{ : }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Support Vectors}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{ : }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{clf}\PY{o}{.}\PY{n}{support\PYZus{}vectors\PYZus{}}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Fraction of training data points that are support vectors}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fraction }\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{ : }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{(}\PY{n}{clf}\PY{o}{.}\PY{n}{support\PYZus{}vectors\PYZus{}}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{/}\PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}} \PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Zm: (50,) , N: (30, 30)
-Uj: (30,)
-X1: [[ 0.46976294  0.10082271  2.73802155 {\ldots} -1.00757998  0.62826412
-   0.35984212]
- [-0.04871214  0.00902035  0.04136905 {\ldots}  0.09852824  0.12883807
-  -0.0672622 ]
- [ 1.79847612  1.10698191  3.92120529 {\ldots} -0.16103529  1.79720199
-   1.65229729]
- {\ldots}
- [-0.399094   -1.55959633  1.67489557 {\ldots} -0.65619333 -0.00954588
-   0.30887721]
- [-0.88028932  0.03576686 -2.61341636 {\ldots}  0.97296517 -0.73806787
-  -0.35988557]
- [ 0.34592278  1.69137074 -1.66608849 {\ldots}  0.35981942 -0.20363409
-  -0.32931533]]
-X2: [[-2.8111344  -1.96879867 -4.93738623 {\ldots} -1.02881963 -2.72574607
-  -2.57111068]
- [-2.04871214 -1.99097965 -1.95863095 {\ldots} -1.90147176 -1.87116193
-  -2.0672622 ]
- [ 2.79847612  2.10698191  4.92120529 {\ldots}  0.83896471  2.79720199
-   2.65229729]
- {\ldots}
- [-2.52313859 -4.24770102  0.41110245 {\ldots} -2.85946183 -2.0263954
-  -1.57363776]
- [-0.88028932  0.03576686 -2.61341636 {\ldots}  0.97296517 -0.73806787
-  -0.35988557]
- [ 2.04629817  2.0292821   2.11218899 {\ldots}  1.86883272  1.75566658
-   1.95446494]]
-X3: [[-1.58468573 -1.34798798 -1.51368234 {\ldots} -1.43219981 -1.46274098
-  -1.51963428]
- [-0.04871214  0.00902035  0.04136905 {\ldots}  0.09852824  0.12883807
-  -0.0672622 ]
- [ 1.27240284 -0.17591742  3.27577888 {\ldots}  0.75135818  1.49349757
-   1.88460116]
- {\ldots}
- [ 0.05383999 -1.53497773  3.68175829 {\ldots} -1.35589643  0.46924132
-   0.63806844]
- [-1.65384065 -1.34342245 -1.18971247 {\ldots} -1.43041501 -1.47506278
-  -1.30840917]
- [ 0.34592278  1.69137074 -1.66608849 {\ldots}  0.35981942 -0.20363409
-  -0.32931533]]
+X Train Size	 :  (400, 2)
+Support Vectors	 :  (236, 2)
+
+Fraction of training data points that are support vectors
+Fraction 	 :  59.0 \%
 
     \end{Verbatim}
 
-    \subsubsection{6) Generate N =?? (to be determined) data samples from
-the preceding model, saving both the data point xi and zi 2 f0; 1g3, the
-one-hot encoding of which component the data point belongs to. Implement
-the K-means algorithm with different values of K = 2; 3; 4;
-5.}\label{generate-n-to-be-determined-data-samples-from-the-preceding-model-saving-both-the-data-point-xi-and-zi-2-f0-1g3-the-one-hot-encoding-of-which-component-the-data-point-belongs-to.-implement-the-k-means-algorithm-with-different-values-of-k-2-3-4-5.}
+    \section{2. Adaboost: Write your own code for Adaboost with decision
+stumps as weak
+learners.}\label{adaboost-write-your-own-code-for-adaboost-with-decision-stumps-as-weak-learners.}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{numberPoint} \PY{o}{=} \PY{l+m+mi}{50}
-         \PY{n}{X\PYZus{}vec} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{X1}\PY{p}{,}\PY{n}{X2}\PY{p}{,}\PY{n}{X3}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-         \PY{n}{Y\PYZus{}vec} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{n+nb}{int}\PY{p}{(}\PY{n}{numberPoint}\PY{p}{)} \PY{o}{+} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{n+nb}{int}\PY{p}{(}\PY{n}{numberPoint}\PY{p}{)} \PY{o}{+} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n+nb}{int}\PY{p}{(}\PY{n}{numberPoint}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{numberPoint}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{X\PYZus{}vec}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{Y\PYZus{}vec}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-(30, 150)
-(3, 150)
-
-    \end{Verbatim}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}12}]:} \PY{k}{def} \PY{n+nf}{KMeans\PYZus{}Vec}\PY{p}{(}\PY{n}{K}\PY{p}{,} \PY{n}{X\PYZus{}vec}\PY{p}{)}\PY{p}{:}
-             \PY{c+c1}{\PYZsh{}input X shape (200,2)}
-             \PY{c+c1}{\PYZsh{}K = 5}
-             \PY{n}{iterations} \PY{o}{=} \PY{l+m+mi}{50}
-             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Shape of input}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{X\PYZus{}vec}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-             \PY{c+c1}{\PYZsh{}initialized mean matrix}
-             \PY{n}{m\PYZus{}hat\PYZus{}vec}  \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
-             \PY{n+nb}{print}\PY{p}{(}\PY{n}{m\PYZus{}hat\PYZus{}vec}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}29}]:} \PY{k}{def} \PY{n+nf}{stumpClassify}\PY{p}{(}\PY{n}{dataMatrix}\PY{p}{,}\PY{n}{dimen}\PY{p}{,}\PY{n}{threshVal}\PY{p}{,}\PY{n}{threshIneq}\PY{p}{)}\PY{p}{:}\PY{c+c1}{\PYZsh{}just classify the data}
+             \PY{n}{retArray} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{shape}\PY{p}{(}\PY{n}{dataMatrix}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n}{threshIneq} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{n}{retArray}\PY{p}{[}\PY{n}{dataMatrix}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{dimen}\PY{p}{]} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{threshVal}\PY{p}{]} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1.0}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{retArray}\PY{p}{[}\PY{n}{dataMatrix}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{dimen}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{threshVal}\PY{p}{]} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1.0}
+             \PY{k}{return} \PY{n}{retArray}
+         
+         \PY{k}{def} \PY{n+nf}{buildStump}\PY{p}{(}\PY{n}{dataArr}\PY{p}{,}\PY{n}{classLabels}\PY{p}{,}\PY{n}{D}\PY{p}{)}\PY{p}{:}
+             \PY{n}{dataMatrix} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mat}\PY{p}{(}\PY{n}{dataArr}\PY{p}{)}
+             \PY{n}{labelMat} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mat}\PY{p}{(}\PY{n}{classLabels}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+             \PY{n}{m}\PY{p}{,}\PY{n}{n} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{shape}\PY{p}{(}\PY{n}{dataMatrix}\PY{p}{)}
              
-             \PY{c+c1}{\PYZsh{}\PYZsh{}initialized covariance matrix}
-             \PY{n}{cov\PYZus{}hat1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{)}
-             \PY{n}{cov\PYZus{}hat2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{)}
-             \PY{n}{cov\PYZus{}hat3} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{)}
-             \PY{n}{cov\PYZus{}hat4} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{)}
-             \PY{n}{cov\PYZus{}hat5} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{)}
+             \PY{n}{numSteps} \PY{o}{=} \PY{l+m+mf}{500.0}
+             \PY{n}{bestStump} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             \PY{n}{bestClasEst} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mat}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{m}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             
+             \PY{n}{minError} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inf} \PY{c+c1}{\PYZsh{}init error sum, to +infinity}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}\PY{c+c1}{\PYZsh{}loop over all dimensions}
                  
-             \PY{n}{cov\PYZus{}hat\PYZus{}vec} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{cov\PYZus{}hat1}\PY{p}{,}\PY{n}{cov\PYZus{}hat2}\PY{p}{,}\PY{n}{cov\PYZus{}hat3}\PY{p}{,}\PY{n}{cov\PYZus{}hat4}\PY{p}{,}\PY{n}{cov\PYZus{}hat5}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-             \PY{n+nb}{print}\PY{p}{(}\PY{n}{cov\PYZus{}hat\PYZus{}vec}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-             \PY{k}{for} \PY{n}{itr} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
-                 \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{K}\PY{p}{)}\PY{p}{:}
-                     \PY{n}{dist} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-                     \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{numberPoint}\PY{p}{)}\PY{p}{:}
-                         \PY{n}{err} \PY{o}{=} \PY{n}{m\PYZus{}hat\PYZus{}vec}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{X\PYZus{}vec}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{j}\PY{p}{]}
-                         \PY{n}{err} \PY{o}{=} \PY{n}{err}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
-                         \PY{n}{dist}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{sum}\PY{p}{(}\PY{n}{err}\PY{p}{)}\PY{p}{)}
-                     \PY{n}{dist\PYZus{}arr} \PY{o}{=} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{asarray}\PY{p}{(}\PY{n}{dist}\PY{p}{)}\PY{p}{)}
-                     \PY{n}{min\PYZus{}dis} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argsort}\PY{p}{(}\PY{n}{dist\PYZus{}arr}\PY{p}{)}
-                     \PY{c+c1}{\PYZsh{}print(min\PYZus{}dis)}
-                     \PY{k}{if}\PY{p}{(}\PY{n}{itr}\PY{o}{\PYZlt{}}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
-                         \PY{k}{for} \PY{n}{sort\PYZus{}idx} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{itr}\PY{p}{)}\PY{p}{:}
-                             \PY{n}{m\PYZus{}hat\PYZus{}vec}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}  \PY{o}{=} \PY{n}{m\PYZus{}hat\PYZus{}vec}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{+} \PY{n}{X\PYZus{}vec}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{min\PYZus{}dis}\PY{p}{[}\PY{n}{sort\PYZus{}idx}\PY{p}{]}\PY{p}{]}
-                         \PY{n}{m\PYZus{}hat\PYZus{}vec}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{m\PYZus{}hat\PYZus{}vec}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{o}{/}\PY{p}{(}\PY{n}{itr}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
-             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K=}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{K}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean\PYZus{}Vector Matrix}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{m\PYZus{}hat\PYZus{}vec}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K=}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{K}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean\PYZus{}Vector Matrix}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{m\PYZus{}hat\PYZus{}vec}\PY{p}{)}
+                 \PY{n}{rangeMin} \PY{o}{=} \PY{n}{dataMatrix}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{rangeMax} \PY{o}{=} \PY{n}{dataMatrix}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{stepSize} \PY{o}{=} \PY{p}{(}\PY{n}{rangeMax}\PY{o}{\PYZhy{}}\PY{n}{rangeMin}\PY{p}{)}\PY{o}{/}\PY{n}{numSteps}
+                 
+                 \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{numSteps}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}  \PY{c+c1}{\PYZsh{}loop over all range in current dimension}
+                     
+                     \PY{k}{for} \PY{n}{inequal} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}     \PY{c+c1}{\PYZsh{}go over less than and greater than}
+                         
+                         \PY{n}{threshVal} \PY{o}{=} \PY{p}{(}\PY{n}{rangeMin} \PY{o}{+} \PY{n+nb}{float}\PY{p}{(}\PY{n}{j}\PY{p}{)} \PY{o}{*} \PY{n}{stepSize}\PY{p}{)}
+                         \PY{n}{predictedVals} \PY{o}{=} \PY{n}{stumpClassify}\PY{p}{(}\PY{n}{dataMatrix}\PY{p}{,}\PY{n}{i}\PY{p}{,}\PY{n}{threshVal}\PY{p}{,}\PY{n}{inequal}\PY{p}{)}\PY{c+c1}{\PYZsh{}call stump classify with i, j, lessThan}
+                         
+                         \PY{n}{errArr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mat}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{n}{m}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                         
+                         \PY{n}{errArr}\PY{p}{[}\PY{n}{predictedVals} \PY{o}{==} \PY{n}{labelMat}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{0}
+                         
+                         \PY{c+c1}{\PYZsh{}Line where AdaBoost interacts with the classifier.}
+                         \PY{n}{weightedError} \PY{o}{=} \PY{n}{D}\PY{o}{.}\PY{n}{T}\PY{o}{*}\PY{n}{errArr}  \PY{c+c1}{\PYZsh{}calc total error multiplied by D}
+                         
+                         \PY{c+c1}{\PYZsh{}print (\PYZdq{}split: dim \PYZpc{}d, thresh \PYZpc{}.2f, thresh ineqal: \PYZpc{}s, the weighted error is \PYZpc{}.3f\PYZdq{} \PYZpc{} (i, threshVal, inequal, weightedError))}
+                         \PY{k}{if} \PY{n}{weightedError} \PY{o}{\PYZlt{}} \PY{n}{minError}\PY{p}{:}
+                             \PY{n}{minError} \PY{o}{=} \PY{n}{weightedError}
+                             \PY{n}{bestClasEst} \PY{o}{=} \PY{n}{predictedVals}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+                             \PY{n}{bestStump}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{i}
+                             \PY{n}{bestStump}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{thresh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{threshVal}
+                             \PY{n}{bestStump}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ineq}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{inequal}
+             \PY{k}{return} \PY{n}{bestStump}\PY{p}{,}\PY{n}{minError}\PY{p}{,}\PY{n}{bestClasEst}
          
+         \PY{k}{def} \PY{n+nf}{adaBoostTrainDS}\PY{p}{(}\PY{n}{dataArr}\PY{p}{,}\PY{n}{classLabels}\PY{p}{,}\PY{n}{numIt}\PY{o}{=}\PY{l+m+mi}{400}\PY{p}{)}\PY{p}{:}
+             
+             \PY{n}{weakClassArr} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{M} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{c+c1}{\PYZsh{}mis the number of datapoints in a dataset}
+             \PY{n}{m} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{shape}\PY{p}{(}\PY{n}{dataArr}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             
+             \PY{c+c1}{\PYZsh{}D holds all the weights of each peice of data}
+             \PY{n}{D} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mat}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{n}{m}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{n}{m}\PY{p}{)}   \PY{c+c1}{\PYZsh{}init D to all equal}
+             \PY{n}{errorRate} \PY{o}{=} \PY{l+m+mi}{100000}
+             \PY{c+c1}{\PYZsh{}aggregrate estimate of the class for every data point}
+             \PY{n}{aggClassEst} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mat}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{m}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{k}{while} \PY{n}{errorRate} \PY{o}{\PYZgt{}} \PY{l+m+mf}{0.001}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{}for i in range(numIt):}
+                 \PY{n}{bestStump}\PY{p}{,}\PY{n}{error}\PY{p}{,}\PY{n}{classEst} \PY{o}{=} \PY{n}{buildStump}\PY{p}{(}\PY{n}{dataArr}\PY{p}{,}\PY{n}{classLabels}\PY{p}{,}\PY{n}{D}\PY{p}{)}\PY{c+c1}{\PYZsh{}build Stump}
+                 \PY{c+c1}{\PYZsh{}print(\PYZdq{}D:\PYZdq{},D.T)}
+                 \PY{n}{alpha} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{l+m+mf}{0.5}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{p}{(}\PY{l+m+mf}{1.0}\PY{o}{\PYZhy{}}\PY{n}{error}\PY{p}{)}\PY{o}{/}\PY{n+nb}{max}\PY{p}{(}\PY{n}{error}\PY{p}{,}\PY{l+m+mf}{1e\PYZhy{}2}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{c+c1}{\PYZsh{}ca2c alpha, throw in max(error,eps) to account for error=0}
+                 \PY{n}{bestStump}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alpha}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{alpha}  
+                 \PY{n}{weakClassArr}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{bestStump}\PY{p}{)}                  \PY{c+c1}{\PYZsh{}store Stump Params in Array}
+                 \PY{c+c1}{\PYZsh{}print (\PYZdq{}classEst: \PYZdq{},classEst.T)}
+                 
+                 \PY{n}{expon} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{multiply}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{o}{*}\PY{n}{alpha}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{mat}\PY{p}{(}\PY{n}{classLabels}\PY{p}{)}\PY{o}{.}\PY{n}{T}\PY{p}{,}\PY{n}{classEst}\PY{p}{)} \PY{c+c1}{\PYZsh{}exponent for D calc, getting messy}
+                 
+                 \PY{n}{D} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{multiply}\PY{p}{(}\PY{n}{D}\PY{p}{,}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{n}{expon}\PY{p}{)}\PY{p}{)}                              \PY{c+c1}{\PYZsh{}Calc New D for next iteration}
+                 \PY{n}{D} \PY{o}{=} \PY{n}{D}\PY{o}{/}\PY{n}{D}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+                 
+                 \PY{c+c1}{\PYZsh{}calc training error of all classifiers, if this is 0 quit for loop early (use break)}
+                 \PY{n}{aggClassEst} \PY{o}{+}\PY{o}{=} \PY{n}{alpha}\PY{o}{*}\PY{n}{classEst}
+                 \PY{c+c1}{\PYZsh{}print (\PYZdq{}aggClassEst: \PYZdq{},aggClassEst.T)}
+                 
+                 \PY{n}{aggErrors} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{multiply}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sign}\PY{p}{(}\PY{n}{aggClassEst}\PY{p}{)} \PY{o}{!=} \PY{n}{np}\PY{o}{.}\PY{n}{mat}\PY{p}{(}\PY{n}{classLabels}\PY{p}{)}\PY{o}{.}\PY{n}{T}\PY{p}{,}\PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{n}{m}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{errorRate} \PY{o}{=} \PY{n}{aggErrors}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{o}{/}\PY{n}{m}
+                 \PY{k}{if} \PY{n}{M}\PY{o}{\PYZpc{}}\PY{k}{50} == 0:
+                     \PY{n+nb}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{total error: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{errorRate}\PY{p}{)}
+                 \PY{n}{M} \PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1} 
+                 \PY{k}{if} \PY{n}{errorRate} \PY{o}{==} \PY{l+m+mf}{0.0}\PY{p}{:} 
+                     \PY{k}{break}
+                 \PY{k}{if} \PY{n}{M} \PY{o}{\PYZgt{}} \PY{n}{numIt}\PY{p}{:}
+                     \PY{k}{break}
+             \PY{k}{return} \PY{n}{weakClassArr} \PY{p}{,}\PY{n}{aggClassEst}
          
-         \PY{n}{KMeans\PYZus{}Vec}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{X\PYZus{}vec}\PY{p}{)}
-         \PY{n}{KMeans\PYZus{}Vec}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{X\PYZus{}vec}\PY{p}{)}
-         \PY{n}{KMeans\PYZus{}Vec}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{X\PYZus{}vec}\PY{p}{)}
-         \PY{n}{KMeans\PYZus{}Vec}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{X\PYZus{}vec}\PY{p}{)}
+         \PY{n}{classifierArray}\PY{p}{,}\PY{n}{aggClassEst} \PY{o}{=} \PY{n}{adaBoostTrainDS}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mat}\PY{p}{(}\PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{n}{np}\PY{o}{.}\PY{n}{mat}\PY{p}{(}\PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{1000}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Shape of input (30, 150)
-(30, 5)
-(30, 150)
-K= 2 Mean\_Vector Matrix (30, 5)
-K= 2 Mean\_Vector Matrix [[ 4.97517619e-01 -1.41483133e+00 -3.90501226e+00  4.11309271e+00
-  -3.91958811e+00]
- [-2.49599128e-02  1.52095156e-02 -1.48832209e+00  8.14785619e-01
-  -3.36104951e+00]
- [ 1.54562456e+00  6.55791746e-01  1.61251137e+00  3.38361169e+00
-  -2.12239995e+00]
- [-1.57079303e-02  1.42965811e+00 -3.99564166e-01  4.19522803e+00
-  -2.29919849e+00]
- [ 9.31675350e-01 -6.40981425e-01 -4.24348228e+00 -3.44067733e+00
-   1.48577750e+00]
- [-1.02055531e-01  1.22602446e+00 -1.33922764e+00  3.76630574e+00
-   1.05142666e+00]
- [-2.97537987e-02 -1.60456309e+00 -1.76470168e+00 -1.52609916e+00
-   1.52654351e+00]
- [-4.65790541e-03 -1.59756439e-02  3.83592490e-01  4.25320835e+00
-   5.15079698e-01]
- [ 2.29636759e-02 -8.37459123e-03 -2.99712048e+00  2.26209464e+00
-   4.74394236e+00]
- [ 8.16153686e-03  8.23550337e-02  1.77193428e-01  3.05903547e+00
-  -9.33201854e-01]
- [ 8.48174196e-01 -1.76157339e+00  3.43150778e+00 -3.24657727e+00
-  -1.58581257e+00]
- [-1.58778954e+00  6.65825302e-01  2.95893245e-01 -2.07799772e-01
-   2.29188539e+00]
- [ 3.38175316e-02  9.34448619e-01 -4.12106568e-01 -2.97073362e+00
-  -3.03660049e+00]
- [ 3.87057534e-01 -1.65074419e+00  4.70356592e-01  2.77960718e+00
-   3.75956716e+00]
- [-5.53164775e-01 -2.78918116e-03 -3.06101239e-01  2.28426323e+00
-  -2.40707446e+00]
- [ 5.89612106e-01  4.29309031e-01 -3.14566755e+00  1.35804991e+00
-  -1.32698504e+00]
- [-9.87062797e-01  6.33042343e-01  3.50466854e+00  1.58096536e+00
-  -2.20525385e+00]
- [ 5.90527710e-01  3.97399036e-01  7.62229255e-01 -3.32946998e+00
-   7.32949739e-01]
- [ 9.54727083e-01 -6.97836467e-01  4.61472839e+00  4.29969025e+00
-  -1.71217085e+00]
- [-8.95784511e-01  1.30171733e+00  4.20380967e+00  4.38554092e+00
-  -2.97940869e+00]
- [-1.06291869e+00  2.51665672e-01 -4.07341594e+00 -1.83593246e+00
-   2.19664474e-01]
- [ 5.61998503e-01  1.94053423e+00 -1.59327945e+00  9.12460303e-01
-   1.81758813e+00]
- [-2.90869595e-02 -1.25900797e-02 -4.98855356e-01 -2.25049002e+00
-   1.05756810e+00]
- [-5.75533627e-01 -1.17275485e-02  3.37773993e+00 -2.71879624e+00
-   1.31662073e+00]
- [-9.62728678e-01  6.59018945e-01  1.14129693e+00  3.17568784e-01
-  -2.65316691e+00]
- [ 1.30276147e-01 -7.56046147e-01 -6.09303323e-01 -9.20842508e-01
-   2.66710782e+00]
- [ 6.28790445e-03 -4.80453830e-01 -2.18807962e+00 -4.42441192e+00
-  -2.50050111e+00]
- [-1.48415707e-01 -1.09560920e+00 -6.36213579e-01  3.39354534e+00
-  -4.56734610e+00]
- [-5.67497653e-01 -1.40126441e+00 -3.55584502e+00  3.74144877e+00
-   3.13866452e+00]
- [ 7.33745477e-02  5.84740678e-01 -3.93965673e+00  1.96837727e+00
-   2.42176984e+00]]
-Shape of input (30, 150)
-(30, 5)
-(30, 150)
-K= 3 Mean\_Vector Matrix (30, 5)
-K= 3 Mean\_Vector Matrix [[ 4.97695758e-01 -8.13663873e-01 -5.78149863e-01 -3.50012222e+00
-   2.44266165e+00]
- [-2.49197852e-02  3.43150605e-02  7.12300285e-02  4.69883230e+00
-  -4.76802366e+00]
- [ 1.54656848e+00  1.45444517e-01  4.59117542e-01 -4.63106651e+00
-  -4.75038268e-01]
- [-1.59709652e-02 -2.18268391e-02 -1.22983538e-02  4.88552024e+00
-   2.64870045e-01]
- [ 9.31160236e-01  9.98675650e-01  9.90680846e-01  4.29420449e+00
-   4.34697384e+00]
- [-1.01157660e-01  8.23967705e-03  3.43258194e-01  2.44313785e+00
-   3.69766726e+00]
- [-2.92648689e-02 -1.05800216e-01  3.10641600e-01  3.90352144e+00
-  -4.53663806e+00]
- [-4.56319067e-03 -1.22117270e-02 -1.37613742e-02 -6.24129164e-01
-   1.72592640e+00]
- [ 2.30679558e-02 -8.83257575e-04 -9.46820675e-03 -4.86202780e+00
-   3.09643520e-01]
- [ 8.21030724e-03  4.69004331e-02 -1.34594372e-02 -1.56082876e+00
-  -3.45040773e+00]
- [ 8.48636978e-01  9.27357736e-01  1.29394221e+00  2.51888326e-01
-  -9.45261285e-01]
- [-1.58831955e+00 -2.62046603e-01 -5.18253576e-01 -2.79549397e+00
-   8.25366835e-01]
- [ 3.39501683e-02 -1.52972205e-02  2.94126984e-02  3.09611456e+00
-  -6.53004480e-01]
- [ 3.87973843e-01 -8.07187637e-01 -1.95836894e-01 -2.56563245e+00
-  -2.30152365e+00]
- [-5.53508691e-01  8.03409558e-01  5.64946918e-01  2.59621813e+00
-   1.02050850e+00]
- [ 5.89896753e-01 -7.95551755e-01 -5.81407612e-01  2.00857465e+00
-  -8.60658619e-01]
- [-9.86848587e-01 -9.97141576e-01 -1.00764880e+00 -2.26627417e+00
-   4.21693412e+00]
- [ 5.89079203e-01  1.83187583e+00  1.20961468e+00 -9.31617043e-01
-   3.52688833e+00]
- [ 9.54538275e-01  1.01194218e+00  1.03960711e+00  2.36416326e+00
-  -2.82096332e+00]
- [-8.96811023e-01 -9.43554970e-01 -1.33843252e+00  3.06516855e+00
-   1.82507451e+00]
- [-1.06281072e+00 -9.52097857e-01 -1.00640965e+00 -4.27162453e+00
-   2.46112083e+00]
- [ 5.62258276e-01 -8.02310222e-01 -8.14871374e-01  4.76386382e+00
-  -1.40498814e+00]
- [-2.91202884e-02  2.71160648e-02  3.95580862e-02 -2.84507373e+00
-   7.98009793e-01]
- [-5.75999791e-01  8.03883073e-01  5.78559907e-01 -4.43150476e+00
-  -2.11687530e+00]
- [-9.62558796e-01 -9.62442360e-01 -9.80843404e-01  9.86545258e-01
-  -3.69243108e+00]
- [ 1.29262626e-01  8.48548213e-02 -2.81737080e-01 -3.20363390e+00
-  -1.90200237e+00]
- [ 6.20908566e-03 -4.02268818e-02 -1.60371691e-02  1.71160999e+00
-   1.78714104e-01]
- [-1.47592621e-01 -4.36035951e-02  3.42243524e-01  4.27734477e+00
-  -2.25046790e+00]
- [-5.67747201e-01  8.05046160e-01  5.37388634e-01  4.64541247e+00
-  -4.52467032e+00]
- [ 7.27133643e-02  3.74549379e-02 -4.04202004e-01  4.11273455e+00
-   2.87104149e+00]]
-Shape of input (30, 150)
-(30, 5)
-(30, 150)
-K= 4 Mean\_Vector Matrix (30, 5)
-K= 4 Mean\_Vector Matrix [[-5.70156146e-01 -4.70280468e-02 -6.94897270e-01 -6.94877594e-01
-  -3.20833026e+00]
- [ 7.23843836e-02  8.55131184e-04  1.77106392e-02  1.77040465e-02
-   3.52824817e+00]
- [ 4.69500752e-01  9.14193203e-01  2.65826704e-01  2.65843188e-01
-   2.13823062e+00]
- [-1.24979132e-02  3.56861987e-02  4.08154600e-03  4.08007790e-03
-   1.39598527e+00]
- [ 9.90975189e-01  1.02184784e+00  1.01483884e+00  1.01483580e+00
-  -4.02962746e+00]
- [ 3.62012502e-01 -8.16427809e-01 -9.52962650e-02 -9.53335731e-02
-   2.60963202e+00]
- [ 3.29183804e-01 -7.61363007e-01 -1.73864523e-01 -1.73889229e-01
-   3.22360308e+00]
- [-1.46357971e-02  1.00109915e-03 -2.03796979e-03 -2.03790200e-03
-  -4.23591053e+00]
- [-7.91923032e-03  1.14472433e-02 -5.94134004e-03 -5.95360507e-03
-   3.88473939e+00]
- [-1.08602638e-02  5.12436287e-02  6.14539981e-02  6.14590050e-02
-   1.80673150e+00]
- [ 1.31300894e+00  1.91227255e-01  8.20688116e-01  8.20654515e-01
-  -8.11693229e-01]
- [-5.23515487e-01 -9.22664228e-01 -3.54681441e-01 -3.54691654e-01
-   8.01154060e-01]
- [ 2.99763893e-02  3.35557958e-02 -6.52494714e-04 -6.52708704e-04
-   2.90871713e+00]
- [-1.72084349e-01 -8.89812642e-01 -8.18410904e-01 -8.18435252e-01
-  -3.02762612e+00]
- [ 5.56326914e-01 -2.76684449e-02  6.86599157e-01  6.86585778e-01
-  -8.84933171e-01]
- [-5.71221683e-01  3.29510752e-02 -6.98911950e-01 -6.98890893e-01
-   4.79403066e+00]
- [-1.00882267e+00 -1.05748962e+00 -9.92658922e-01 -9.92667772e-01
-  -1.70283962e+00]
- [ 1.18209971e+00  1.83938737e+00  1.83732313e+00  1.83734260e+00
-  -4.00194919e+00]
- [ 1.03970720e+00  9.21240617e-01  1.01406624e+00  1.01407413e+00
-   1.96018611e+00]
- [-1.35676824e+00 -1.80670203e-01 -8.13256605e-01 -8.13228469e-01
-  -2.19424095e+00]
- [-1.01080069e+00 -1.01201549e+00 -9.24404168e-01 -9.24402783e-01
-   3.20166218e+00]
- [-8.24214935e-01  6.92295660e-01 -5.87981001e-01 -5.87931224e-01
-   1.44836514e+00]
- [ 3.82857892e-02  9.16364047e-03  1.15233472e-02  1.15148649e-02
-  -4.26145602e+00]
- [ 5.69020560e-01  4.18944470e-02  6.99150491e-01  6.99133804e-01
-   6.30856120e-01]
- [-9.82827645e-01 -9.67135776e-01 -9.84342223e-01 -9.84344584e-01
-   3.74930876e+00]
- [-3.00269998e-01  8.48361680e-01  1.98636445e-01  1.98676017e-01
-   3.54427763e-02]
- [-1.64188697e-02 -2.81012657e-02 -3.49806079e-02 -3.49825010e-02
-  -4.73080678e+00]
- [ 3.59814451e-01 -8.10836489e-01 -1.68893216e-01 -1.68931984e-01
-  -1.29097746e+00]
- [ 5.29259089e-01  3.78209577e-02  6.90615557e-01  6.90599200e-01
-  -8.29430590e-01]
- [-4.21006211e-01  7.74166433e-01  1.22231251e-01  1.22267140e-01
-   2.96843388e+00]]
-Shape of input (30, 150)
-(30, 5)
-(30, 150)
-K= 5 Mean\_Vector Matrix (30, 5)
-K= 5 Mean\_Vector Matrix [[-5.78147561e-01 -1.46989622e+00 -1.46989545e+00 -1.41483259e+00
-  -6.94876995e-01]
- [ 7.12303803e-02  2.60401316e-03  2.60410361e-03  1.52074980e-02
-   1.77029530e-02]
- [ 4.59119151e-01  1.28679639e+00  1.28679863e+00  6.55791627e-01
-   2.65842997e-01]
- [-1.22970646e-02  1.39883115e+00  1.39883250e+00  1.42965719e+00
-   4.08053974e-03]
- [ 9.90683841e-01 -2.12861116e-01 -2.12860166e-01 -6.40980280e-01
-   1.01483824e+00]
- [ 3.43259415e-01  9.82604246e-01  9.82604426e-01  1.22602460e+00
-  -9.53361528e-02]
- [ 3.10645870e-01 -1.79178472e+00 -1.79178427e+00 -1.60456573e+00
-  -1.73889861e-01]
- [-1.37641935e-02 -1.80138927e-02 -1.80129457e-02 -1.59751493e-02
-  -2.03801613e-03]
- [-9.46731700e-03  1.51364766e-02  1.51385558e-02 -8.37487064e-03
-  -5.95337525e-03]
- [-1.34574038e-02  2.70750588e-02  2.70761844e-02  8.23529408e-02
-   6.14589497e-02]
- [ 1.29394686e+00 -1.63579368e-02 -1.63574044e-02 -1.76157082e+00
-   8.20655022e-01]
- [-5.18254697e-01  1.15999151e-01  1.15998187e-01  6.65825853e-01
-  -3.54691261e-01]
- [ 2.94163634e-02  1.78917110e+00  1.78917378e+00  9.34449586e-01
-  -6.51447662e-04]
- [-1.95831070e-01 -1.90370579e+00 -1.90370641e+00 -1.65074581e+00
-  -8.18436885e-01]
- [ 5.64948194e-01  5.77333972e-03  5.77275350e-03 -2.79166634e-03
-   6.86583479e-01]
- [-5.81405587e-01 -2.43105011e-01 -2.43106766e-01  4.29309385e-01
-  -6.98887658e-01]
- [-1.00764756e+00  1.63511337e-01  1.63513767e-01  6.33041487e-01
-  -9.92668058e-01]
- [ 1.20960789e+00 -2.83452226e-01 -2.83452327e-01  3.97394602e-01
-   1.83734367e+00]
- [ 1.03960365e+00 -1.84571078e-01 -1.84571886e-01 -6.97837030e-01
-   1.01407275e+00]
- [-1.33843775e+00  2.88141196e-01  2.88140222e-01  1.30171903e+00
-  -8.13228287e-01]
- [-1.00640986e+00  4.15222695e-01  4.15223755e-01  2.51665593e-01
-  -9.24403042e-01]
- [-8.14869819e-01  1.47137305e+00  1.47137542e+00  1.94053342e+00
-  -5.87928187e-01]
- [ 3.95610164e-02 -3.01579654e-02 -3.01565476e-02 -1.25907180e-02
-   1.15150364e-02]
- [ 5.78560735e-01 -2.62938921e-02 -2.62930581e-02 -1.17276423e-02
-   6.99134965e-01]
- [-9.80840955e-01  1.69344477e-01  1.69342555e-01  6.59018884e-01
-  -9.84345349e-01]
- [-2.81741229e-01 -1.24371127e+00 -1.24371082e+00 -7.56045293e-01
-   1.98677707e-01]
- [-1.60380889e-02  3.06284167e-01  3.06285660e-01 -4.80454464e-01
-  -3.49797289e-02]
- [ 3.42248784e-01  1.36097429e-01  1.36099174e-01 -1.09560385e+00
-  -1.68934314e-01]
- [ 5.37384567e-01 -1.45458046e+00 -1.45458038e+00 -1.40126413e+00
-   6.90595651e-01]
- [-4.04204998e-01  1.04205522e-01  1.04203139e-01  5.84741214e-01
-   1.22266636e-01]]
+total error:  0.22
+total error:  0.16
+total error:  0.1325
+total error:  0.1225
+total error:  0.1075
+total error:  0.1075
+total error:  0.1075
+total error:  0.0975
+total error:  0.095
+total error:  0.0975
+total error:  0.085
+total error:  0.085
+total error:  0.0825
+total error:  0.0725
+total error:  0.0725
+total error:  0.075
+total error:  0.075
+total error:  0.0675
+total error:  0.0625
+total error:  0.0575
+total error:  0.055
 
     \end{Verbatim}
 
-    \subsection{7.) Geometric insights for
-K-means}\label{geometric-insights-for-k-means}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{k}{def} \PY{n+nf}{adaClassify}\PY{p}{(}\PY{n}{datToClass}\PY{p}{,}\PY{n}{classifierArr}\PY{p}{)}\PY{p}{:}
+             \PY{n}{dataMatrix} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mat}\PY{p}{(}\PY{n}{datToClass}\PY{p}{)}\PY{c+c1}{\PYZsh{}do stuff similar to last aggClassEst in adaBoostTrainDS}
+             \PY{n}{m} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{shape}\PY{p}{(}\PY{n}{dataMatrix}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{aggClassEst} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mat}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{m}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{classifierArr}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{classEst} \PY{o}{=}\PY{n}{stumpClassify}\PY{p}{(}\PY{n}{dataMatrix}\PY{p}{,}\PY{n}{classifierArr}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{classifierArr}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{thresh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{classifierArr}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ineq}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{c+c1}{\PYZsh{}call stump classify}
+                 \PY{n}{aggClassEst} \PY{o}{+}\PY{o}{=} \PY{n}{classifierArr}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alpha}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{*}\PY{n}{classEst}
+                 \PY{c+c1}{\PYZsh{}print (aggClassEst)}
+             \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{sign}\PY{p}{(}\PY{n}{aggClassEst}\PY{p}{)}
+\end{Verbatim}
 
-Yes, The values of means calculated after computing the d-dimensional
-matrix are quite relatable to the "u" vector generated in starting. And
-the relation is as follows. Component 1 = u1 + Z1u2 + Z2u3 + N and the
-d-dimensional mean calculated after is , for all the values that have -1
-in the position when taking the final values of component 1, the
-corresponding values in mean matrix are nearer to -1 or less then 0,
-similary for all the values that summed to 1 in the component 1, the
-corresponding value in mean matrix is greater then 0. Similary for all
-the three components created so far. Hence it can be deduced from the
-values of mean that, the initial vector "u" used in creation of
-genertion of data or each component actually influences the values of
-corresponding means of the final mean matrix.
 
-    \subsubsection{8.) EM algorithm with several different values of
-K}\label{em-algorithm-with-several-different-values-of-k}
+    \paragraph{1.1 Plot of the individual decision boundaries for the first
+five weak learners
+found}\label{plot-of-the-individual-decision-boundaries-for-the-first-five-weak-learners-found}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{} Initialization }
-         \PY{n}{K} \PY{o}{=} \PY{l+m+mi}{3}
-         \PY{n}{Pik}\PY{o}{=} \PY{p}{[}\PY{l+m+mf}{0.33}\PY{p}{,} \PY{l+m+mf}{0.33}\PY{p}{,} \PY{l+m+mf}{0.34}\PY{p}{]}
-         \PY{n}{Mk} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Plot \PYZhy{} Weak Learners}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{sample\PYZus{}0\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{sample\PYZus{}0\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{blue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{sample\PYZus{}1\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{sample\PYZus{}1\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{classifierArray}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{classifierArray}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{0} \PY{p}{:}
+                 \PY{c+c1}{\PYZsh{}print classifierArray[i][\PYZsq{}thresh\PYZsq{}]}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{n}{classifierArray}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{thresh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             \PY{k}{if} \PY{n}{classifierArray}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{}print classifierArray[i][\PYZsq{}thresh\PYZsq{}]}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y} \PY{o}{=} \PY{n}{classifierArray}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{thresh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}    
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Individual Weak Classifiers}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{weak\PYZus{}1075.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}plt.axis([\PYZhy{}maxX, maxX, \PYZhy{}maxY, maxY])}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{n}{data\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{resolution} \PY{o}{=} \PY{l+m+mi}{100}
+         \PY{n}{plot\PYZus{}step} \PY{o}{=} \PY{l+m+mf}{0.02}
+         \PY{n}{colors}\PY{o}{=}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+         \PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max} \PY{o}{=} \PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}
+         \PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max} \PY{o}{=} \PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}
+         \PY{n}{xx}\PY{p}{,} \PY{n}{yy} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{meshgrid}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max}\PY{p}{,} \PY{n}{plot\PYZus{}step}\PY{p}{)}\PY{p}{,}
+                              \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max}\PY{p}{,} \PY{n}{plot\PYZus{}step}\PY{p}{)}\PY{p}{)}
          
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{Mk}\PY{p}{)}
+         \PY{n}{Z} \PY{o}{=} \PY{n}{adaClassify}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{ndarray}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{c\PYZus{}}\PY{p}{[}\PY{n}{xx}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{yy}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{n}{classifierArray}\PY{p}{)}
+         \PY{n}{Z} \PY{o}{=} \PY{n}{Z}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{xx}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
          
-         \PY{n}{ck\PYZus{}hat1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{)}
-         \PY{n}{ck\PYZus{}hat2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{)}
-         \PY{n}{ck\PYZus{}hat3} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{)}
-         \PY{n}{ck\PYZus{}hat4} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{)}
-         \PY{n}{ck\PYZus{}hat5} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{)}
-                 
-         \PY{n}{Ck} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{ck\PYZus{}hat1}\PY{p}{,}\PY{n}{ck\PYZus{}hat2}\PY{p}{,}\PY{n}{ck\PYZus{}hat3}\PY{p}{,}\PY{n}{ck\PYZus{}hat4}\PY{p}{,}\PY{n}{ck\PYZus{}hat5}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-         
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{Ck}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         
-         
-         \PY{k}{def} \PY{n+nf}{fit\PYZus{}EM\PYZus{}vector}\PY{p}{(}\PY{n}{X\PYZus{}vec}\PY{p}{,} \PY{n}{max\PYZus{}iters}\PY{p}{,} \PY{n}{k}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{eps} \PY{o}{=} \PY{l+m+mf}{0.000001}\PY{p}{)}\PY{p}{:}
-             \PY{c+c1}{\PYZsh{} n = number of data\PYZhy{}points, d = dimension of data points        }
-             \PY{n}{d}\PY{p}{,}\PY{n}{n} \PY{o}{=} \PY{n}{X\PYZus{}vec}\PY{o}{.}\PY{n}{shape}
-             \PY{n+nb}{print}\PY{p}{(}\PY{n}{X\PYZus{}vec}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-             \PY{c+c1}{\PYZsh{} randomly choose the starting centroids/means }
-             \PY{c+c1}{\PYZsh{}\PYZsh{} as 3 of the points from datasets        }
-             \PY{n}{mu} \PY{o}{=} \PY{n}{X\PYZus{}vec}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{d}\PY{p}{,} \PY{n}{k}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)}\PY{p}{,} \PY{p}{:}\PY{p}{]}
-             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean U: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{mu}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         
-             \PY{c+c1}{\PYZsh{} initialize the covariance matrices for each gaussians}
-             \PY{n}{Sigma} \PY{o}{=} \PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{eye}\PY{p}{(}\PY{n}{d}\PY{p}{)}\PY{p}{]} \PY{o}{*} \PY{n}{k}
-             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Covariance: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{Sigma}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-             \PY{c+c1}{\PYZsh{} initialize the probabilities/weights for each gaussians}
-             \PY{n}{w} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{1.}\PY{o}{/}\PY{n}{k}\PY{p}{]} \PY{o}{*} \PY{n}{k}
-         
-             \PY{c+c1}{\PYZsh{} responsibility matrix is initialized to all zeros}
-             \PY{c+c1}{\PYZsh{} we have responsibility for each of n points for eack of k gaussians}
-             \PY{n}{R} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{k}\PY{p}{)}\PY{p}{)}
-         
-             \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} log\PYZus{}likelihoods}
-             \PY{n}{log\PYZus{}likelihoods} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-         
-             \PY{n}{P} \PY{o}{=} \PY{k}{lambda} \PY{n}{mu}\PY{p}{,} \PY{n}{s}\PY{p}{:} \PY{p}{(}\PY{l+m+mf}{2774532095.999}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{o}{\PYZhy{}}\PY{o}{.}\PY{l+m+mi}{5} \PY{o}{*}\PY{o}{*} \PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{d}\PY{o}{/}\PY{l+m+mf}{2.}\PY{p}{)} \PYZbs{}
-                     \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{o}{.}\PY{l+m+mi}{5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{einsum}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ij, ij \PYZhy{}\PYZgt{} i}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PYZbs{}
-                             \PY{n}{X} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{mu}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{Sigma\PYZus{}inv} \PY{p}{,} \PY{p}{(}\PY{n}{X\PYZus{}vec} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{mu}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{o}{.}\PY{n}{T} \PY{p}{)} \PY{p}{)} 
-             
-             \PY{c+c1}{\PYZsh{} Iterate till max\PYZus{}iters iterations        }
-             \PY{k}{while} \PY{n+nb}{len}\PY{p}{(}\PY{n}{log\PYZus{}likelihoods}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{max\PYZus{}iters}\PY{p}{:}
-         
-                 \PY{c+c1}{\PYZsh{} E \PYZhy{} Step}
-                 \PY{c+c1}{\PYZsh{}\PYZsh{} Vectorized implementation of e\PYZhy{}step equation to calculate the }
-                 \PY{c+c1}{\PYZsh{}\PYZsh{} membership for each of k \PYZhy{}gaussians}
-                 \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
-                     \PY{n}{R}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{n}{w}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{*} \PY{n}{P}\PY{p}{(}\PY{n}{mu}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{p}{,} \PY{n}{Sigma}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{p}{)}
-         
-                 \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} Likelihood computation}
-                 \PY{n}{log\PYZus{}likelihood} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{R}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-         
-                 \PY{n}{log\PYZus{}likelihoods}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{log\PYZus{}likelihood}\PY{p}{)}
-         
-                 \PY{c+c1}{\PYZsh{}\PYZsh{} Normalize so that the responsibility matrix is row stochastic}
-                 \PY{n}{R} \PY{o}{=} \PY{p}{(}\PY{n}{R}\PY{o}{.}\PY{n}{T} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{R}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{T}
-         
-                 \PY{c+c1}{\PYZsh{}\PYZsh{} The number of datapoints belonging to each gaussian            }
-                 \PY{n}{N\PYZus{}ks} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{R}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}
-         
-         
-                 \PY{c+c1}{\PYZsh{} M Step}
-                 \PY{c+c1}{\PYZsh{}\PYZsh{} calculate the new mean and covariance for each gaussian by }
-                 \PY{c+c1}{\PYZsh{}\PYZsh{} utilizing the new responsibilities}
-                 \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
-         
-                     \PY{c+c1}{\PYZsh{}\PYZsh{} means}
-                     \PY{n}{mu}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{l+m+mf}{1.} \PY{o}{/} \PY{n}{N\PYZus{}ks}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{R}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{k}\PY{p}{]} \PY{o}{*} \PY{n}{X}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{T}
-                     \PY{n}{x\PYZus{}mu} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matrix}\PY{p}{(}\PY{n}{X\PYZus{}vec} \PY{o}{\PYZhy{}} \PY{n}{mu}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{p}{)}
-         
-                     \PY{c+c1}{\PYZsh{}\PYZsh{} covariances}
-                     \PY{n}{Sigma}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{l+m+mi}{1} \PY{o}{/} \PY{n}{N\PYZus{}ks}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{multiply}\PY{p}{(}\PY{n}{x\PYZus{}mu}\PY{o}{.}\PY{n}{T}\PY{p}{,}  \PY{n}{R}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{k}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{x\PYZus{}mu}\PY{p}{)}\PY{p}{)}
-         
-                     \PY{c+c1}{\PYZsh{}\PYZsh{} and finally the probabilities}
-                     \PY{n}{w}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{l+m+mf}{1.} \PY{o}{/} \PY{n}{n} \PY{o}{*} \PY{n}{N\PYZus{}ks}\PY{p}{[}\PY{n}{k}\PY{p}{]}
-                 \PY{c+c1}{\PYZsh{} check for onvergence}
-                 \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{log\PYZus{}likelihoods}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mi}{2} \PY{p}{:} \PY{k}{continue}
-                 \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{log\PYZus{}likelihood} \PY{o}{\PYZhy{}} \PY{n}{log\PYZus{}likelihoods}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{eps}\PY{p}{:} \PY{k}{break}
-         
-             
-             \PY{c+c1}{\PYZsh{}\PYZsh{} bind all results together}
-             \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{namedtuple}
-             \PY{n}{params} \PY{o}{=} \PY{n}{namedtuple}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{params}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sigma}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log\PYZus{}likelihoods}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}iters}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
-             \PY{n}{params}\PY{o}{.}\PY{n}{mu} \PY{o}{=} \PY{n}{mu}
-             \PY{n}{params}\PY{o}{.}\PY{n}{Sigma} \PY{o}{=} \PY{n}{Sigma}
-             \PY{n}{params}\PY{o}{.}\PY{n}{w} \PY{o}{=} \PY{n}{w}
-             \PY{n}{params}\PY{o}{.}\PY{n}{log\PYZus{}likelihoods} \PY{o}{=} \PY{n}{log\PYZus{}likelihoods}
-             \PY{n}{params}\PY{o}{.}\PY{n}{num\PYZus{}iters} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{log\PYZus{}likelihoods}\PY{p}{)}   
-             \PY{k}{return} \PY{n}{params}
-         
-         \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{:}
-             \PY{n}{params} \PY{o}{=} \PY{n}{fit\PYZus{}EM\PYZus{}vector}\PY{p}{(}\PY{n}{X\PYZus{}vec}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{,}\PY{n}{k}\PY{o}{=}\PY{n}{val}\PY{p}{)}
-             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mu   :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{params}\PY{o}{.}\PY{n}{mu}\PY{p}{)}
-             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Si   :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{params}\PY{o}{.}\PY{n}{Sigma}\PY{p}{)}
-             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W    :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{params}\PY{o}{.}\PY{n}{w}\PY{p}{)}
-             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LogL :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{params}\PY{o}{.}\PY{n}{log\PYZus{}likelihoods}\PY{p}{)}
-             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Iter :}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{params}\PY{o}{.}\PY{n}{num\PYZus{}iters}\PY{p}{)}
-             \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{params}\PY{o}{.}\PY{n}{log\PYZus{}likelihoods}\PY{p}{)}
-             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Log Likelihood vs iteration plot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-             \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Iterations}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-             \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log likelihood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}ax.contour(xx, yy, Z, colors=\PYZsq{}k\PYZsq{})}
+         \PY{n}{cs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{contourf}\PY{p}{(}\PY{n}{xx}\PY{p}{,} \PY{n}{yy}\PY{p}{,} \PY{n}{Z}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{Paired}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} Plot decision contours using grid and}
+         \PY{c+c1}{\PYZsh{} make a scatter plot of training data}
+         \PY{c+c1}{\PYZsh{}ax.contour(xrange, yrange, grid, colors=\PYZsq{}k\PYZsq{})}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{sample\PYZus{}0\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{sample\PYZus{}0\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{blue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{sample\PYZus{}1\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{sample\PYZus{}1\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}ax.scatter(data\PYZus{}set[:,0], data\PYZus{}set[:,1],c=data\PYZus{}set[:,2], cmap=plt.cm.viridis, lw=0, alpha=0.5)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Adabost Decision Boundary}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{adabost\PYZus{}2949.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}                
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{k}{def} \PY{n+nf}{plotROC}\PY{p}{(}\PY{n}{predStrengths}\PY{p}{,} \PY{n}{classLabels}\PY{p}{)}\PY{p}{:}
+             \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+             \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+             \PY{n}{cur} \PY{o}{=} \PY{p}{(}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{)} \PY{c+c1}{\PYZsh{}cursor}
+             \PY{n}{ySum} \PY{o}{=} \PY{l+m+mf}{0.0} \PY{c+c1}{\PYZsh{}variable to calculate AUC}
+             \PY{n}{numPosClas} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{classLabels}\PY{o}{==}\PY{l+m+mf}{1.0}\PY{p}{)}
+             \PY{n}{yStep} \PY{o}{=} \PY{l+m+mi}{1}\PY{o}{/}\PY{n+nb}{float}\PY{p}{(}\PY{n}{numPosClas}\PY{p}{)} 
+             \PY{n}{xStep} \PY{o}{=} \PY{l+m+mi}{1}\PY{o}{/}\PY{n+nb}{float}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{classLabels}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{numPosClas}\PY{p}{)}
+             \PY{n}{sortedIndicies} \PY{o}{=} \PY{n}{predStrengths}\PY{o}{.}\PY{n}{argsort}\PY{p}{(}\PY{p}{)}\PY{c+c1}{\PYZsh{}get sorted index, it\PYZsq{}s reverse}
+             \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+             \PY{n}{fig}\PY{o}{.}\PY{n}{clf}\PY{p}{(}\PY{p}{)}
+             \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{111}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}loop through all the values, drawing a line segment at each point}
+             \PY{k}{for} \PY{n}{index} \PY{o+ow}{in} \PY{n}{sortedIndicies}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{:}
+                 \PY{k}{if} \PY{n}{classLabels}\PY{p}{[}\PY{n}{index}\PY{p}{]} \PY{o}{==} \PY{l+m+mf}{1.0}\PY{p}{:}
+                     \PY{n}{delX} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;} \PY{n}{delY} \PY{o}{=} \PY{n}{yStep}\PY{p}{;}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{delX} \PY{o}{=} \PY{n}{xStep}\PY{p}{;} \PY{n}{delY} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;}
+                     \PY{n}{ySum} \PY{o}{+}\PY{o}{=} \PY{n}{cur}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                 \PY{c+c1}{\PYZsh{}draw line from cur to (cur[0]\PYZhy{}delX,cur[1]\PYZhy{}delY)}
+                 \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{n}{cur}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{cur}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{delX}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{n}{cur}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{cur}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{delY}\PY{p}{]}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{cur} \PY{o}{=} \PY{p}{(}\PY{n}{cur}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{delX}\PY{p}{,}\PY{n}{cur}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{delY}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{False positive rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True positive rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ROC curve for AdaBoost horse colic detection system}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
              \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+             \PY{n+nb}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{the Area Under the Curve is: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{ySum}\PY{o}{*}\PY{n}{xStep}\PY{p}{)}
+             
+         \PY{n}{plotROC}\PY{p}{(}\PY{n}{aggClassEst}\PY{o}{.}\PY{n}{T}\PY{p}{,}\PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{numPosClas} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mat}\PY{p}{(}\PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{==}\PY{l+m+mf}{1.0}\PY{p}{)}
+         \PY{n}{adaClassify}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{ndarray}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{c\PYZus{}}\PY{p}{[}\PY{n}{xx}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{yy}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{n}{classifierArray}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{399}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+the Area Under the Curve is:  0.9933500000000004
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}35}]:} matrix([[-1.]])
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{n}{plot\PYZus{}colors} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{br}\PY{l+s+s2}{\PYZdq{}}
+         \PY{n}{plot\PYZus{}step} \PY{o}{=} \PY{l+m+mf}{0.02}
+         \PY{n}{class\PYZus{}names} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AB}\PY{l+s+s2}{\PYZdq{}}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Plot the decision boundaries}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{121}\PY{p}{)}
+         \PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max} \PY{o}{=} \PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}
+         \PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max} \PY{o}{=} \PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}
+         \PY{n}{xx}\PY{p}{,} \PY{n}{yy} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{meshgrid}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max}\PY{p}{,} \PY{n}{plot\PYZus{}step}\PY{p}{)}\PY{p}{,}
+                              \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max}\PY{p}{,} \PY{n}{plot\PYZus{}step}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{Z} \PY{o}{=} \PY{n}{adaClassify}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{ndarray}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{c\PYZus{}}\PY{p}{[}\PY{n}{xx}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{yy}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{n}{classifierArray}\PY{p}{)}
+         \PY{n}{Z} \PY{o}{=} \PY{n}{Z}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{xx}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         
+         \PY{n}{cs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{contourf}\PY{p}{(}\PY{n}{xx}\PY{p}{,} \PY{n}{yy}\PY{p}{,} \PY{n}{Z}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{Paired}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tight}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{sample\PYZus{}0\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{sample\PYZus{}0\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{blue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{sample\PYZus{}1\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{sample\PYZus{}1\PYZus{}data\PYZus{}set}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Decision Boundary}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-[[ 4.76156317 -1.56408452 -0.47927134  0.80902582  4.02730917]
- [ 3.4019048   2.40944342  3.24134912  0.27381211 -3.53558513]
- [ 1.97174179 -0.22661808  0.73471453  3.67829045 -2.97699967]
- [-4.11598534 -1.40246647  1.37969184  1.15390811  2.12433782]
- [ 2.37896977 -4.10213099  0.48731094 -3.08284452 -0.181407  ]
- [-0.96807159 -1.82523631  0.8346912   1.67392626 -4.35835928]
- [ 4.55155045 -3.77196041 -2.87899132  0.38496428  3.94630725]
- [-2.60781415 -1.31356206 -3.62070848  2.53998055  4.09481227]
- [ 3.08915869  2.23543917  2.81977776  0.9533677  -2.02058748]
- [-2.84709939  1.06960256 -2.18315336  3.29082482 -3.59212485]
- [ 0.58838998 -3.79294743  2.14245065  4.17364777  0.61634129]
- [ 1.74500809 -3.1394544   3.26060211  3.03633863  0.98144981]
- [-2.67840067 -4.98780994  3.12072081 -2.9026952  -4.80124728]
- [ 0.42705044 -1.86866521  2.27481098  3.55152512  0.46143884]
- [-0.57367557 -2.37615889 -2.62753269  3.4702087   0.50602406]
- [ 1.77121165 -1.76630915 -1.44744294 -4.2961298   1.27038967]
- [ 3.68931279 -0.32982198  0.74434072 -2.65655327 -4.7143609 ]
- [-4.65221706  1.86648104  1.74426169 -4.30840301 -2.66496226]
- [-4.45609479  1.34944632  2.99310049  0.34206732  3.44907011]
- [ 2.17894239  1.19071798  1.67376874 -4.42309182 -4.2205166 ]
- [-1.00948994  0.7992479   4.54855894 -0.41230662 -2.04176535]
- [-0.57536894  3.0782663   2.51562808 -0.82055156  3.77703834]
- [-1.44752669 -4.06389586 -3.96752124 -2.93336014 -3.33813104]
- [-3.90056196  3.28174761  3.18238786  2.82221875 -3.94475083]
- [ 0.7828361   1.5677652   4.57917149 -2.16518822 -1.18215077]
- [ 0.84355738 -1.6744267   2.14287556  4.82641997 -1.24494359]
- [-4.3524858  -1.40379506 -2.57911625  4.22835421  3.33612984]
- [-0.57668532  1.31543278 -3.37930429  2.27425833 -1.43431595]
- [ 3.79912187 -1.60259342  4.77055277  2.24504025 -0.50662366]
- [-3.08604292  0.15014777  2.02683006 -3.5319226   1.06193139]]
-(30, 150)
-(30, 150)
-Mean U:  (2, 150)
-Covariance:  (30, 30)
+No handles with labels found to put in legend.
 
     \end{Verbatim}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-
-        ---------------------------------------------------------------------------
-
-        ValueError                                Traceback (most recent call last)
-
-        <ipython-input-13-30fa4ec94222> in <module>()
-         92 
-         93 for val in range(2,6):
-    ---> 94     params = fit\_EM\_vector(X\_vec,10,k=val)
-         95     print('Mu   :',params.mu)
-         96     print('Si   :',params.Sigma)
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_20_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
     
+    Observations on top of the report
 
-        <ipython-input-13-30fa4ec94222> in fit\_EM\_vector(X\_vec, max\_iters, k, eps)
-         48         \#\# membership for each of k -gaussians
-         49         for k in range(k):
-    ---> 50             R[:, k] = w[k] * P(mu[k], Sigma[k])
-         51 
-         52         \#\#\# Likelihood computation
-    
-
-        <ipython-input-13-30fa4ec94222> in <lambda>(mu, s)
-         39     log\_likelihoods = []
-         40 
-    ---> 41     P = lambda mu, s: (2774532095.999) ** -.5 ** (2 * np.pi) ** (-d/2.)             * np.exp(-.5 * np.einsum('ij, ij -> i',                    X - (mu.T), np.dot(Sigma\_inv , (X\_vec - (mu.T)).T).T ) )
-         42 
-         43     \# Iterate till max\_iters iterations
-    
-
-        ValueError: operands could not be broadcast together with shapes (50,30) (150,) 
-
-    \end{Verbatim}
-
-    \subsubsection{9) Optional bonus problem: Play with deterministic
-annealing for this dataset, and report on your
-findings.}\label{optional-bonus-problem-play-with-deterministic-annealing-for-this-dataset-and-report-on-your-findings.}
+    \section{END}\label{end}
 
 
     % Add a bibliography block to the postdoc
